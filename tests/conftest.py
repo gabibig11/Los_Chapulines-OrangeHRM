@@ -1,11 +1,12 @@
 import pytest
 import requests
+from config import system_url
 
-system_url= "https://api-sandbox.orangehrm.com"
+#system_url = "https://api-sandbox.orangehrm.com"
 @pytest.fixture
 def test_login():
     url = f'{system_url}/oauth/issueToken'
-    #url = 'https://api-sandbox.orangehrm.com/oauth/issueToken'
+    # url = 'https://api-sandbox.orangehrm.com/oauth/issueToken'
     payload = {'client_id': 'api-client', 'client_secret': '942d36a36d6bf422a36f5871f905b6e5',
                'grant_type': 'client_credentials'}
     response = requests.post(url, data=payload)
