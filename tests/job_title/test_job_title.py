@@ -8,7 +8,8 @@ import jsonschema
 def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos
     url = f'{system_url}/api/jobTitles'
     # url = 'https://api-sandbox.orangehrm.com/api/jobTitles'
-    headers = {'Authorization': f'Bearer {test_login}'}
+    print(test_login)
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response.status_code == 200
@@ -17,7 +18,6 @@ def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos l
 
 def test_job_title_no_token(test_login):
     url = f'{system_url}/api/jobTitles'
-    #headers = {'Authorization': f'Bearer {test_login}'}
     response = requests.get(url)
     response_err = response.json()
     assert response.status_code == 401
@@ -36,7 +36,7 @@ def test_job_title_invalid_token(test_login):
 
 def test_job_title_expired_token(test_login):
     url = f'{system_url}/api/jobTitles'
-    headers = {'Authorization': f'Bearer 519ba4b405aca163fb4c7740868884a37ff34db2'}  # 519ba4b405aca163fb4c7740868884a37ff34db2
+    headers = {'Authorization': f'Bearer da8c7430701fd54d0582de569b6fb3859c9a0fd0'}  # da8c7430701fd54d0582de569b6fb3859c9a0fd0
     response = requests.get(url, headers=headers)
     response_err = response.json()
     assert response.status_code == 401
@@ -56,7 +56,7 @@ def test_job_title_incomplete_header():
 
 def test_schema_job(test_login):
     url = f'{system_url}/api/jobTitles?limit=1&offset=0&sortingField=id&sortingOrder=ASC'  # formato correcto
-    headers = {'Authorization': f'Bearer {test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_schema = response.json()
     print(response_schema)
@@ -119,7 +119,7 @@ def test_schema_job(test_login):
 
 def test_job_title_not_empty_labels(test_login):
     url = f'{system_url}/api/jobTitles?limit=1&offset=0&sortingField=id&sortingOrder=ASC'
-    headers = {'Authorization': f'Bearer {test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_data = response.json()
     for job_object in response_data['data']:
@@ -132,7 +132,7 @@ def test_job_title_not_empty_labels(test_login):
 
 def test_job_title_sortingField(test_login):
     url = f'{system_url}/api/jobTitles?sortingField=id'
-    headers = {'Authorization': f'Bearer {test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response_data['data'] is not None
@@ -140,7 +140,7 @@ def test_job_title_sortingField(test_login):
 
 def test_job_title_sortingOrder_desc(test_login):
     url = f'{system_url}/api/jobTitles?sortingField=id&sortingOrder=ASC'
-    headers = {'Authorization': f'Bearer {test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response_data['data'] is not None
@@ -148,7 +148,7 @@ def test_job_title_sortingOrder_desc(test_login):
 
 def test_job_title_params(test_login):
     url = f'{system_url}/api/jobTitles?limit=10&offset=0&sortingField=id&sortingOrder=ASC'
-    headers = {'Authorization': f'Bearer {test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response_data['data'] is not None
@@ -156,7 +156,7 @@ def test_job_title_params(test_login):
 
 def test_job_title_invalid_params(test_login):
     url = f'{system_url}/api/jobTitles?limit=10&offset=0&sortingField=id&order=ASC'
-    headers = {'Authorization': f'Bearer {test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     assert response.status_code == 400
 

@@ -11,7 +11,8 @@ def test_login():
                'grant_type': 'client_credentials'}
     response = requests.post(url, data=payload)
     response_data = response.json()
-    access_token = response_data["access_token"]
+    # access_token = response_data["access_token"]
     assert response.status_code == 200
+    assert response_data["token_type"] is not None
     assert response_data["access_token"] is not None
-    return access_token
+    return f'{response_data["token_type"]} {response_data["access_token"]}'
