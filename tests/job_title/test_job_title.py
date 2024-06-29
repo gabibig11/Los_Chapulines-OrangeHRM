@@ -1,12 +1,13 @@
 import pytest
 import requests
-from config import system_url
-
 import jsonschema
+from config import system_url
+from src.orangeHRM_api.endpoints import Endpoints
+from src.orangeHRM_api.api_requests import OrangeRequests
 
 
 def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos
-    url = f'{system_url}/api/jobTitles'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     # url = 'https://api-sandbox.orangehrm.com/api/jobTitles'
     print(test_login)
     headers = {'Authorization': f'{test_login}'}
@@ -17,7 +18,7 @@ def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos l
 
 
 def test_job_title_no_token(test_login):
-    url = f'{system_url}/api/jobTitles'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     response = requests.get(url)
     response_err = response.json()
     assert response.status_code == 401
@@ -25,7 +26,7 @@ def test_job_title_no_token(test_login):
 
 
 def test_job_title_invalid_token(test_login):
-    url = f'{system_url}/api/jobTitles'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': f'Bearer 519ba4b405aca163fb4c7740868884a37ff34d'}  # 519ba4b405aca163fb4c7740868884a37ff34d
     response = requests.get(url, headers=headers)
     response_err = response.json()
@@ -35,7 +36,7 @@ def test_job_title_invalid_token(test_login):
 
 
 def test_job_title_expired_token(test_login):
-    url = f'{system_url}/api/jobTitles'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': f'Bearer da8c7430701fd54d0582de569b6fb3859c9a0fd0'}  # da8c7430701fd54d0582de569b6fb3859c9a0fd0
     response = requests.get(url, headers=headers)
     response_err = response.json()
@@ -45,9 +46,9 @@ def test_job_title_expired_token(test_login):
 
 
 def test_job_title_incomplete_header():
-    url = f'{system_url}/api/jobTitles'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': 'Bearer'}  # la estructura de header empieza con Bearer acompañado del token
-    response = requests.post(url, headers=headers)
+    response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response.status_code == 401
     assert response_data["error"] == 'invalid_request'
