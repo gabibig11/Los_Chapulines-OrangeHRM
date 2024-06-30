@@ -6,7 +6,7 @@ from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
 
 
-def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos
+def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos que estan aqui
     url = f'{system_url}{Endpoints.job_titles.value}'
     # url = 'https://api-sandbox.orangehrm.com/api/jobTitles'
     print(test_login)
