@@ -1,6 +1,6 @@
 import requests
 
-class OrangeRequests:
+class Orange_requests:
 
     def get(self, url, headers=None):
         response = requests.get(url, headers=headers)

@@ -3,7 +3,7 @@ import requests
 import jsonschema
 from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
-from src.orangeHRM_api.api_requests import OrangeRequests
+from src.orangeHRM_api.api_requests import Orange_requests
 
 
 def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos
