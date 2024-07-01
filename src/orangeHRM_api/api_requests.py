@@ -1,6 +1,5 @@
 import requests
 
-
 class OrangeRequests:
 
     def get(self, url, headers=None, params=None):
