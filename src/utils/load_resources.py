@@ -21,3 +21,5 @@ def load_schema_resource(filename):
         print(f"Error: No se pudo decodificar el archivo JSON {filename}.")
     except Exception as e:
         print(f"Error inesperado: {e}")
+       
+

@@ -1,0 +1,171 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "data"
+    ],
+    "properties": {
+        "data": {
+            "type": "object",
+            "required": [
+                "created_by",
+                "date_entered",
+                "date_modified",
+                "deleted",
+                "emp_number",
+                "Employee",
+                "id",
+                "modified_user_id",
+                "purged",
+                "regions",
+                "status",
+                "user_name",
+                "user_role_id",
+                "UserUserRole"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "emp_number": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                },
+                "user_role_id": {
+                    "type": "string"
+                },
+                "deleted": {
+                    "type": "string"
+                },
+                "purged": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "date_entered": {
+                    "type": "null"
+                },
+                "date_modified": {
+                    "type": "null"
+                },
+                "modified_user_id": {
+                    "type": "null"
+                },
+                "created_by": {
+                    "type": "null"
+                },
+                "regions": {
+                    "type": "string"
+                },
+                "Employee": {
+                    "type": "object",
+                    "required": [
+                        "emp_work_email",
+                        "employeeId",
+                        "empNumber",
+                        "firstName",
+                        "lastName",
+                        "middleName",
+                        "purged_at",
+                        "termination_id"
+                    ],
+                    "properties": {
+                        "empNumber": {
+                            "type": "string"
+                        },
+                        "employeeId": {
+                            "type": "string"
+                        },
+                        "firstName": {
+                            "type": "string"
+                        },
+                        "middleName": {
+                            "type": "string"
+                        },
+                        "lastName": {
+                            "type": "string"
+                        },
+                        "purged_at": {
+                            "type": "null"
+                        },
+                        "termination_id": {
+                            "type": "null"
+                        },
+                        "emp_work_email": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "UserUserRole": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "type": "string"
+                            },
+                            "user_role_type_id": {
+                                "type": "null"
+                            },
+                            "rule_xml": {
+                                "type": "null"
+                            },
+                            "UserRole": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "display_name": {
+                                        "type": "string"
+                                    },
+                                    "is_assignable": {
+                                        "type": "boolean"
+                                    },
+                                    "is_predefined": {
+                                        "type": "boolean"
+                                    },
+                                    "is_editable": {
+                                        "type": "boolean"
+                                    },
+                                    "deletable": {
+                                        "type": "boolean"
+                                    },
+                                    "typeId": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "deletable",
+                                    "display_name",
+                                    "id",
+                                    "is_assignable",
+                                    "is_editable",
+                                    "is_predefined",
+                                    "name",
+                                    "typeId"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "rule_xml",
+                            "user_id",
+                            "user_role_type_id",
+                            "UserRole"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
