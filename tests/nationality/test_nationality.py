@@ -70,7 +70,7 @@ def test_get_nationality_data_keys(test_login):
 
 #Verificar que una solicitud con parámetros inválidos retorna un estado 400
 def test_get_nationality_invalid_parameters():
-    url = f'{system_url}{Endpoints.nacionality_list.value}?invalid_param=value'
+    url = f'{system_url}{Endpoints.nationality_list.value}?invalid_param=value'
     orange_requests = OrangeRequests()
     response = orange_requests.get(url)
     AssertionNationality.assert_invalid_parameters(response)
@@ -78,7 +78,7 @@ def test_get_nationality_invalid_parameters():
 
 #Verificar que la solicitud con el parámetro offset igual a 0 retorna la lista de equipos correctamente
 def test_offset_zero_returns_correct_list(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}?offset=0'
+    url = f'{system_url}{Endpoints.nationality_list.value}?offset=0'
     headers = {'Authorization': test_login}
     response = OrangeRequests().get(url, headers=headers)
     AssertionNationality.assert_status_code(response, 200)
@@ -87,7 +87,7 @@ def test_offset_zero_returns_correct_list(test_login):
 
 #Verificar que la solicitud con el parámetro limit igual a 0 retorna una lista de equipos sin datos
 def test_get_nationalities_limit_zero(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     print(f'URL {url}')
     print(f'Token: {test_login}')
     headers = {'Authorization': f'{test_login}'}
@@ -104,7 +104,7 @@ def test_get_nationalities_limit_zero(test_login):
 
 #Verificar que la solicitud no devuelva campos vacíos
 def test_no_empty_fields_in_response(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     headers = {'Authorization': f'{test_login}'}
     orange_requests = OrangeRequests()
     response = orange_requests.get(url, headers=headers)
