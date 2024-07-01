@@ -1,28 +1,23 @@
-import requests
-from tests.config import system_url
+from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
-from src.utils.load_resources import load_schema_resource
-import jsonschema
+from src.assertions.job_categories_assertions import assert_get_job_categories_schema, assert_get_job_categories_succesfuly
 import pytest
+from src.orangeHRM_api.api_requests import OrangeRequests
 
 
-@pytest.mark.smoke
-def test_job_categories_schema_file(test_login):
+def test_job_categories_schema(test_login):
     url = f'{system_url}{Endpoints.job_categories.value}'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
-    response_json = response.json()
+    response = OrangeRequests().get(url, headers=headers)
+    assert_get_job_categories_schema(response)
 
-    schema = load_schema_resource("job_categories_schema.json")
-    assert jsonschema.validate(instance=response_json, schema=schema) is None
-
-
+@pytest.mark.smoke
 def test_job_categories_success(test_login):
     url = f'{system_url}{Endpoints.job_categories.value}'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_json = response.json()
-    assert response.status_code == 200
+    assert_get_job_categories_succesfuly(response)
     assert response_json['data'] is not None
 
 
@@ -31,34 +26,47 @@ def test_job_categories_filter_by_limit(test_login):
     # sortingFeild is requiret to use limit filter
     url = f'{system_url}{Endpoints.job_categories.value}?limit={limit}&sortingFeild=id'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_json = response.json()
-    assert response.status_code == 200
+    assert_get_job_categories_succesfuly(response)
     assert len(response_json['data']) == limit
 
 
 def test_job_categories_filter_by_field(test_login):
     url = f'{system_url}{Endpoints.job_categories.value}?limit=10&sortingFeild=id'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_json = response.json()
     response_data = response_json["data"]
-    assert response.status_code == 200
+    assert_get_job_categories_succesfuly(response)
     assert all([int(response_data[i]["id"]) > int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
 
 
 def test_job_categories_filter_by_field_and_order(test_login):
     url = f'{system_url}{Endpoints.job_categories.value}?limit=10&sortingFeild=id&sortingOrder=ASC'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_json = response.json()
     response_data = response_json["data"]
-    assert response.status_code == 200
     assert all([int(response_data[i]["id"]) < int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
 
 
 def test_job_categories_invalid_filter(test_login):
     url = f'{system_url}{Endpoints.job_categories.value}?invalidFilter=invalidFilterValue'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     assert response.status_code == 400
+
+
+def test_job_categories_invalid_token():
+    url = f'{system_url}{Endpoints.job_categories.value}'
+    headers = {'Authorization': 'invalid_token'}
+    response = OrangeRequests().get(url, headers=headers)
+    assert response.status_code == 401
+
+
+def test_job_categories_expired_token():
+    url = f'{system_url}{Endpoints.job_categories.value}'
+    headers = {'Authorization': 'Bearer 6e81dcf8cd0f3651d393f712e6ee332b30a4ed2d'}
+    response = OrangeRequests().get(url, headers=headers)
+    assert response.status_code == 401
