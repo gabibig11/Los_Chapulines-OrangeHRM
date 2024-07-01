@@ -10,7 +10,6 @@ import pytest
 import jsonschema
 from src.orangeHRM_api.api_requests import OrangeRequests
 
-
 @pytest.mark.smoke
 @pytest.mark.funtional
 def test_employment_status_token(test_login):
@@ -31,11 +30,49 @@ def test_limit(test_login):
     assert_employment_status_succesfuly(response)
     assert len(response_json['data']) == limit
 
+@pytest.mark.funtional
+def test_sortingOrder(test_login):
+    url = f'{system_url}{Endpoints.employment_status.value}?limit=10&sortingOrder=ASC'
+    headers = {'Authorization': f'{test_login}'}
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
 
+    assert response_data['data'] is not None
+@pytest.mark.funtional
 
+def test_sortingFeild(test_login):
+    url = f'{system_url}{Endpoints.employment_status.value}?limit=10&sortingFeild=id'
+    headers = {'Authorization': f'{test_login}'}
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+    assert response_data['data'] is not None
+@pytest.mark.funtional
+def test_limit_offset(test_login):
+    url = f'{system_url}{Endpoints.employment_status.value}?limit=10&offset=2'
+    headers = {'Authorization': f'{test_login}'}
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+    assert response_data['data'] is not None
 
 @pytest.mark.funtional
+def test_sortingFeild_sortingOrder(test_login):
+    url = f'{system_url}{Endpoints.employment_status.value}?sortingFeild=id&sortingOrder=ASC'
+    headers = {'Authorization': f'{test_login}'}
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+    assert response_data['data'] is not None
+
+@pytest.mark.funtional
+def test_all(test_login):
+
+    url = f'{system_url}{Endpoints.employment_status.value}?limit=4&offset=2&sortingFeild=id&sortingOrder=ASC'
+    headers = {'Authorization': f'{test_login}'}
+    response = requests.get(url, headers=headers)
+    response_data = response.json()
+    assert response_data['data'] is not None
+@pytest.mark.funtional
 def test_expired_token():
+
     url = f'{system_url}{Endpoints.employment_status.value}'
     headers = {'Authorization': 'Bearer 6e81dcf8cd0f3651d393f712e6ee332b30a4ed2d'}
     response = OrangeRequests().get(url, headers=headers)
