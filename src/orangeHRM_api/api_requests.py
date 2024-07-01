@@ -1,12 +1,8 @@
 import requests
 
-class Orange_requests:
+class OrangeRequests:
 
-    def get(self, url, headers=None):
-        response = requests.get(url, headers=headers)
+    def get(self, url, headers=None, params=None):
+        response = requests.get(url, headers=headers, params=params)
         return response
 
-    @staticmethod
-    def post(url, headers, payload):
-        response = requests.post(url, headers=headers, data=payload)
-        return response
