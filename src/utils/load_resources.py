@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+
 BASE = Path(__file__).absolute().parent.parent
 
 
@@ -20,3 +21,5 @@ def load_schema_resource(filename):
         print(f"Error: No se pudo decodificar el archivo JSON {filename}.")
     except Exception as e:
         print(f"Error inesperado: {e}")
+       
+
