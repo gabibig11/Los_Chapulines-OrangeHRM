@@ -1,0 +1,158 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "meta"
+    ],
+    "properties": {
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "emp_number": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "user_name": {
+                        "type": "string"
+                    },
+                    "user_role_id": {
+                        "type": "string"
+                    },
+                    "deleted": {
+                        "type": "string"
+                    },
+                    "purged": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "date_entered": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "date_modified": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "modified_user_id": {
+                        "type": "null"
+                    },
+                    "created_by": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "regions": {
+                        "type": "string"
+                    },
+                    "UserUserRole": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string"
+                                },
+                                "user_id": {
+                                    "type": "string"
+                                },
+                                "user_role_type_id": {
+                                    "type": "null"
+                                },
+                                "rule_xml": {
+                                    "type": "null"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "rule_xml",
+                                "user_id",
+                                "user_role_type_id"
+                            ]
+                        }
+                    },
+                    "Employee": {
+                        "type": "object",
+                        "properties": {
+                            "empNumber": {
+                                "type": "string"
+                            },
+                            "employeeId": {
+                                "type": [
+                                    "null",
+                                    "string"
+                                ]
+                            },
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "middleName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "purged_at": {
+                                "type": "null"
+                            },
+                            "termination_id": {
+                                "type": "null"
+                            },
+                            "emp_work_email": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "employeeId",
+                            "empNumber",
+                            "firstName",
+                            "lastName",
+                            "middleName",
+                            "purged_at",
+                            "termination_id"
+                        ]
+                    }
+                },
+                "required": [
+                    "created_by",
+                    "date_entered",
+                    "date_modified",
+                    "deleted",
+                    "emp_number",
+                    "id",
+                    "modified_user_id",
+                    "purged",
+                    "regions",
+                    "status",
+                    "user_name",
+                    "user_role_id",
+                    "UserUserRole"
+                ]
+            }
+        },
+        "meta": {
+            "type": "object",
+            "required": [
+                "total"
+            ],
+            "properties": {
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
