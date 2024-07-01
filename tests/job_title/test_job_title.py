@@ -1,163 +1,122 @@
+import string
+import random
 import pytest
 import requests
-import jsonschema
 from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
+from src.assertions.job_title_assertions import assert_job_title_auth_error, assert_job_titles_schema
+
+random_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
 
 
-def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos
+@pytest.mark.smoke
+def test_job_title_success(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
-    # url = 'https://api-sandbox.orangehrm.com/api/jobTitles'
-    print(test_login)
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_data = response.json()
+    assert assert_job_titles_schema(response_data) == True
     assert response.status_code == 200
     assert response_data['data'] is not None
 
 
-def test_job_title_no_token(test_login):
+def test_job_title_no_token():
     url = f'{system_url}{Endpoints.job_titles.value}'
-    response = requests.get(url)
+    response = OrangeRequests().get(url)
     response_err = response.json()
     assert response.status_code == 401
-    assert response_err == []  # suposicion
+    assert response_err == []
 
 
-def test_job_title_invalid_token(test_login):
+@pytest.mark.parametrize("wrong_token, case", [(f'Bearer {random_token}', 1),  # test_job_title_invalid_token
+                                               ("Bearer da8c7430701fd54d0582de569b6fb3859c9a0fd0", 2),  #test_job_title_expired_token
+                                               ("Bearer", 3)])  # test_job_title_incomplete_header
+def test_job_title_no_authorization(wrong_token, case):
     url = f'{system_url}{Endpoints.job_titles.value}'
-    headers = {'Authorization': f'Bearer 519ba4b405aca163fb4c7740868884a37ff34d'}  # 519ba4b405aca163fb4c7740868884a37ff34d
-    response = requests.get(url, headers=headers)
-    response_err = response.json()
-    assert response.status_code == 401
-    assert response_err['error'] == "invalid_token"
-    assert response_err['error_description'] == "The access token provided is invalid"
-
-
-def test_job_title_expired_token(test_login):
-    url = f'{system_url}{Endpoints.job_titles.value}'
-    headers = {'Authorization': f'Bearer da8c7430701fd54d0582de569b6fb3859c9a0fd0'}  # da8c7430701fd54d0582de569b6fb3859c9a0fd0
-    response = requests.get(url, headers=headers)
-    response_err = response.json()
-    assert response.status_code == 401
-    assert response_err['error'] == "expired_token"
-    assert response_err['error_description'] == "The access token provided has expired"
-
-
-def test_job_title_incomplete_header():
-    url = f'{system_url}{Endpoints.job_titles.value}'
-    headers = {'Authorization': 'Bearer'}  # la estructura de header empieza con Bearer acompañado del token
-    response = requests.get(url, headers=headers)
+    headers = {'Authorization': f'{wrong_token}'}
+    response = OrangeRequests().get(url, headers=headers)
     response_data = response.json()
     assert response.status_code == 401
-    assert response_data["error"] == 'invalid_request'
-    assert response_data["error_description"] == "Malformed auth header"
+    assert_job_title_auth_error(response_data, case)
 
 
 def test_schema_job(test_login):
     url = f'{system_url}/api/jobTitles?limit=1&offset=0&sortingField=id&sortingOrder=ASC'  # formato correcto
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_schema = response.json()
-    print(response_schema)
-    schema = {
-        "type": "object",
-        "properties": {
-            "data": {
-                "type": "array",
-                "items": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "string"
-                            },
-                            "jobTitleName": {
-                                "type": "string"
-                            },
-                            "jobDescription": {
-                                "type": "string"
-                            },
-                            "note": {
-                                "type": "string"
-                            },
-                            "isDeleted": {
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "jobTitleName",
-                            "jobDescription",
-                            "note",
-                            "isDeleted"
-                        ]
-                }
-            },
-            "meta": {
-                "type": "object",
-                "properties": {
-                    "total": {
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "total"
-                ]
-            }
-        },
-        "required": [
-            "data",
-            "meta"
-        ]
-    }
-    try:
-        jsonschema.validate(instance=response_schema, schema=schema)
-    except jsonschema.exceptions.ValidationError as err:
-        pytest.fail(f'pruebaError {err}')
+    schema = assert_job_titles_schema(response_schema)
+    assert schema == True
     assert response.status_code == 200
 
 
 def test_job_title_not_empty_labels(test_login):
-    url = f'{system_url}/api/jobTitles?limit=1&offset=0&sortingField=id&sortingOrder=ASC'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    response = OrangeRequests().get(url, headers=headers)
     response_data = response.json()
-    for job_object in response_data['data']:
-        assert job_object['id'] is not None
-        assert job_object['jobTitleName'] is not None
-        assert job_object['jobDescription'] is not None
-        assert job_object['note'] is not None
-        assert job_object['isDeleted'] is not None
+    for job_title_object in response_data['data']:
+        assert job_title_object['id'] is not None
+        assert job_title_object['jobTitleName'] is not None
+        assert job_title_object['jobDescription'] is not None
+        assert job_title_object['note'] is not None
+        assert job_title_object['isDeleted'] is not None
 
 
-def test_job_title_sortingField(test_login):
-    url = f'{system_url}/api/jobTitles?sortingField=id'
+@pytest.mark.parametrize("case", ['id', 'jobTitleName', 'jobDescription'])
+def test_job_title_sortingField(test_login, case):
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
-    response_data = response.json()
-    assert response_data['data'] is not None
-
-
-def test_job_title_sortingOrder_desc(test_login):
-    url = f'{system_url}/api/jobTitles?sortingField=id&sortingOrder=ASC'
-    headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    params = {'sortingField': f'{case}'}
+    response = OrangeRequests().get(url, headers=headers, params=params)
     response_data = response.json()
     assert response_data['data'] is not None
+
+
+@pytest.mark.parametrize("case", ['id', 'jobTitleName', 'jobDescription'])
+def test_job_title_sortingField_limit(test_login, case):
+    url = f'{system_url}{Endpoints.job_titles.value}'
+    headers = {'Authorization': f'{test_login}'}
+    params = {'limit': 10, 'sortingField': f'{case}'}
+    response = OrangeRequests().get(url, headers=headers, params=params)
+    response_data = response.json()
+    cont = len(response_data['data'])
+    assert response_data['data'] is not None
+    assert cont == 10
+
+
+def test_job_title_sortingOrder_asc(test_login):  # consulta viene por defecto desc
+    url = f'{system_url}{Endpoints.job_titles.value}'
+    headers = {'Authorization': f'{test_login}'}
+    params = {'sortingField': 'id', 'sortingOrder': 'ASC'}
+    response = OrangeRequests().get(url, headers=headers, params=params)
+    response_data = response.json()
+    data = response_data['data']
+    asc = False
+    for i in range(len(data) - 1):
+        actual_id = int(data[i]['id'])
+        next_id = int(data[i + 1]['id'])
+
+        if actual_id <= next_id:
+            asc = True
+            break
+    assert asc == True
 
 
 def test_job_title_params(test_login):
-    url = f'{system_url}/api/jobTitles?limit=10&offset=0&sortingField=id&sortingOrder=ASC'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    params = {'limit': 10, 'offset': 0, 'sortingField': 'id', 'sortingOrder': 'ASC'}
+    response = OrangeRequests().get(url, headers=headers, params=params)
     response_data = response.json()
     assert response_data['data'] is not None
 
 
 def test_job_title_invalid_params(test_login):
-    url = f'{system_url}/api/jobTitles?limit=10&offset=0&sortingField=id&order=ASC'
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Authorization': f'{test_login}'}
-    response = requests.get(url, headers=headers)
+    params = {'limit': 10, 'offset': 0, 'sortingField': 'id', 'order': 'ASC'}  # order en vez de sortingOrder
+    response = OrangeRequests().get(url, headers=headers, params=params)
     assert response.status_code == 400
 
