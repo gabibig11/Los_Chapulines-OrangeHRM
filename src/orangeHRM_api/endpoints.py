@@ -7,3 +7,4 @@ class Endpoints(Enum):
     getusers_id="/api/systemUsers/"
     job_categories = "/api/jobCategories"
     location = "/api/locations"
+    employment_status = "/api/employmentStatus"
