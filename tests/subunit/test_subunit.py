@@ -9,7 +9,7 @@ from src.orangeHRM_api.endpoints import Endpoints
 with open('src/resources/schemas/subunit_schema.json') as schema_file:
     subunit_schema = json.load(schema_file)
 
-@pytest.mark.smoke
+@pytest.mark.smoke #para definir cual es mi test smoke
 def test_get_subunit_valid_id(test_login):
     subunit_id = 1
     url = f'{system_url}{Endpoints.subunits.value}/{subunit_id}'
