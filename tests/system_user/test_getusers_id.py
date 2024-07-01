@@ -1,7 +1,7 @@
 import requests
 import pytest
 from config import system_url
-from src.assertions.getusers_id_assertions import assert_getusers_id_schema, assert_getusers_id_include_schema
+from src.assertions.getusers_assertions import assert_getusers_id_schema, assert_getusers_id_include_schema
 from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
 
