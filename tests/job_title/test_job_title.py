@@ -1,9 +1,6 @@
-import os
 import pytest
-import sys
 import requests
 import jsonschema
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
