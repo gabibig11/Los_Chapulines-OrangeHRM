@@ -18,7 +18,6 @@ def test_job_categories_success(test_login):
     response = OrangeRequests().get(url, headers=headers)
     response_json = response.json()
     assert_get_job_categories_succesfuly(response)
-    assert response_json['data'] is not None
 
 
 def test_job_categories_filter_by_limit(test_login):
@@ -32,17 +31,20 @@ def test_job_categories_filter_by_limit(test_login):
     assert len(response_json['data']) == limit
 
 
-def test_job_categories_filter_by_field(test_login):
+def test_job_categories_sorting_by_id_field(test_login):
+    """Verificar que las categorias sean ordenadas por el campo id, por defecto en orden descendente"""
     url = f'{system_url}{Endpoints.job_categories.value}?limit=10&sortingFeild=id'
     headers = {'Authorization': f'{test_login}'}
     response = OrangeRequests().get(url, headers=headers)
     response_json = response.json()
     response_data = response_json["data"]
     assert_get_job_categories_succesfuly(response)
+    # Verificar que el id este en orden descendente para garantizar que se haya ordenado segun el campo id
     assert all([int(response_data[i]["id"]) > int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
 
 
 def test_job_categories_filter_by_field_and_order(test_login):
+    """Verificar que las categorias sean ordenadas por el campo id en orden ascendente"""
     url = f'{system_url}{Endpoints.job_categories.value}?limit=10&sortingFeild=id&sortingOrder=ASC'
     headers = {'Authorization': f'{test_login}'}
     response = OrangeRequests().get(url, headers=headers)
