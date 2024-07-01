@@ -2,13 +2,13 @@ import pytest
 from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
-from src.assertions.nacionality_assertions import AssertionNationality
+from src.assertions.nationality_assertions import AssertionNationality
 
 
 @pytest.mark.smoke
 #Verificar que la solicitud exitosa retorna un estado 200
 def test_get_nationality_success(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     print(f'URL {url}')
     print(f'Token: {test_login}')
     headers = {'Authorization': f'{test_login}'}
@@ -19,7 +19,7 @@ def test_get_nationality_success(test_login):
 
 #Verificar que la solicitud sin un token retorne un estado 401
 def test_get_nationality_no_token():
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     print(f'URL {url}')
     headers = {}
     response = OrangeRequests().get(url, headers=headers)
@@ -28,7 +28,7 @@ def test_get_nationality_no_token():
 
 #Verificar que la solicitud con un token inválido retorne un estado 401
 def test_get_nationality_invalid_token():
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     print(f'URL {url}')
     headers = {'Authorization': 'Bearer INVALID_TOKEN'}
     response = OrangeRequests().get(url, headers=headers)
@@ -36,7 +36,7 @@ def test_get_nationality_invalid_token():
 
 #Verificar que la solicitud con un token válido y parámetros válidos retorne un estado 200
 def test_get_nationality_valid_token_and_parameters(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     headers = {'Authorization': test_login}
     params = {
         "limit": 10,
@@ -50,7 +50,7 @@ def test_get_nationality_valid_token_and_parameters(test_login):
 
 #Verificar que la solicitud retorna la estructura JSON esperada
 def test_nationality_json_structure(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     headers = {'Authorization': f'{test_login}'}
     orange_requests = OrangeRequests()
     response = orange_requests.get(url, headers=headers)
@@ -60,7 +60,7 @@ def test_nationality_json_structure(test_login):
 
 #Verificar que cada elemento en la lista data contiene las claves id y name
 def test_get_nationality_data_keys(test_login):
-    url = f'{system_url}{Endpoints.nacionality_list.value}'
+    url = f'{system_url}{Endpoints.nationality_list.value}'
     headers = {'Authorization': f'{test_login}'}
     orange_requests = OrangeRequests()
     response = orange_requests.get(url, headers=headers)
