@@ -1,12 +1,15 @@
+import os
 import pytest
+import sys
 import requests
 import jsonschema
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
 
 
-def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos
+def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos los cargos que estan aqui
     url = f'{system_url}{Endpoints.job_titles.value}'
     # url = 'https://api-sandbox.orangehrm.com/api/jobTitles'
     print(test_login)
@@ -14,8 +17,7 @@ def test_job_title_success(test_login):  # repuesta exitosa al solicitar todos l
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response.status_code == 200
-    assert response_data['data'] is not None
-
+    assert response_data['data']is not None
 
 def test_job_title_no_token(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
