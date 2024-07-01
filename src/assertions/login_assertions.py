@@ -1,6 +1,7 @@
 import pytest
-# from utils.load_resources import load_schema_resource
 import jsonschema
+#from utilds
+from src.utils.load_resources import load_schema_resource
 
 def assert_login_success(test_login_success):
     assert test_login_success["token_type"] is not None
@@ -18,29 +19,7 @@ def assert_login_blocked(response):
 
 
 def assert_login_schema(test_login_success):
-    schema = {
-        "type": "object",
-        "properties": {
-            "access_token": {
-                "type": "string"
-            },
-            "expires_in": {
-                "type": "integer"
-            },
-            "token_type": {
-                "type": "string"
-            },
-            "scope": {
-                "type": "string"
-            }
-        },
-        "required": [
-            "access_token",
-            "expires_in",
-            "token_type",
-            "scope"
-        ]
-}
+    schema = load_schema_resource("login_schema.json")
     try:
         jsonschema.validate(instance=test_login_success, schema=schema)
         return True
