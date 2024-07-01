@@ -1,0 +1,134 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "meta"
+    ],
+    "properties": {
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "type": "string"
+                    },
+                    "time_zone": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "province": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "city": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "address": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "zipCode": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "phone": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "fax": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "notes": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "eeo_applicable": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "object",
+                        "properties": {
+                            "cou_code": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "cou_name": {
+                                "type": "string"
+                            },
+                            "iso3": {
+                                "type": "string"
+                            },
+                            "numcode": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "cou_code",
+                            "cou_name",
+                            "iso3",
+                            "name",
+                            "numcode"
+                        ]
+                    },
+                    "numberOfEmployees": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "address",
+                    "city",
+                    "country",
+                    "countryCode",
+                    "eeo_applicable",
+                    "fax",
+                    "id",
+                    "name",
+                    "notes",
+                    "numberOfEmployees",
+                    "phone",
+                    "province",
+                    "time_zone",
+                    "zipCode"
+                ]
+            }
+        },
+        "meta": {
+            "type": "object",
+            "required": [
+                "total"
+            ],
+            "properties": {
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
