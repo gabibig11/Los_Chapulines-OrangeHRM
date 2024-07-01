@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+
 BASE = Path(__file__).absolute().parent.parent
 
 
