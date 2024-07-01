@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "meta"
+    ],
+    "properties": {
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "name"
+                ]
+            }
+        },
+        "meta": {
+            "type": "object",
+            "required": [
+                "total"
+            ],
+            "properties": {
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
