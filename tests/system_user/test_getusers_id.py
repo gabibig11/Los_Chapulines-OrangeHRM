@@ -38,6 +38,7 @@ def test_get_users_invalid_id(test_login):#test2 error por id invalido
 	response = OrangeRequests().get(url, headers=headers)
 	assert response.status_code == 403
 
+
 @pytest.mark.xfail
 def test_get_users_id_not_supported_params(test_login):#test4 error por parametro no soportado FAILED
 	token = test_login
@@ -49,6 +50,7 @@ def test_get_users_id_not_supported_params(test_login):#test4 error por parametr
 	headers = {'Authorization': token}
 	response = OrangeRequests().get(url, headers=headers, params=params)
 	assert response.status_code == 400
+
 
 def test_get_users_id_invalid_token():#test5 error por token invalido
 	token = '7ae27d28b1a8e0379cf4f1f5adf2cd3aa4713308'

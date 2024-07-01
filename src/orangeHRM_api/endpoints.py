@@ -9,3 +9,5 @@ class Endpoints(Enum):
     getusers_filter="/api/systemUsers"
     job_categories = "/api/jobCategories"
     location = "/api/locations"
+    employment_status = "/api/employmentStatus"
+
