@@ -4,4 +4,6 @@ from enum import Enum
 class Endpoints(Enum):
     login = "/oauth/issueToken"
     job_titles = "/api/jobTitles"
-    employment_status = "/api/employmentStatus"
+    job_categories = "/api/jobCategories"
+    location = "/api/locations"
+    employment_status = "employmentStatus"
