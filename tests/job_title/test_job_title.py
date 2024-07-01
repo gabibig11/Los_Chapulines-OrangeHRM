@@ -18,8 +18,7 @@ def test_job_title_success(test_login):
     response_data = response.json()
     assert assert_job_titles_schema(response_data) == True
     assert response.status_code == 200
-    assert response_data['data'] is not None
-
+    assert response_data['data']is not None
 
 def test_job_title_no_token():
     url = f'{system_url}{Endpoints.job_titles.value}'
