@@ -1,0 +1,60 @@
+{
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "required": [
+            "data"
+        ],
+        "properties": {
+            "data": {
+                "type": "object",
+                "required": [
+                    "created_by",
+                    "date_entered",
+                    "date_modified",
+                    "deleted",
+                    "emp_number",
+                    "id",
+                    "modified_user_id",
+                    "purged",
+                    "status",
+                    "user_name",
+                    "user_role_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "emp_number": {
+                        "type": "string"
+                    },
+                    "user_name": {
+                        "type": "string"
+                    },
+                    "user_role_id": {
+                        "type": "string"
+                    },
+                    "deleted": {
+                        "type": "string"
+                    },
+                    "purged": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "date_entered": {
+                        "type": "null"
+                    },
+                    "date_modified": {
+                        "type": "null"
+                    },
+                    "modified_user_id": {
+                        "type": "null"
+                    },
+                    "created_by": {
+                        "type": "null"
+                    }
+                }
+            }
+        }
+    }

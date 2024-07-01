@@ -3,6 +3,9 @@ import jsonschema
 #from utilds
 from src.utils.load_resources import load_schema_resource
 
+from src.utils.load_resources import load_schema_resource
+
+
 def assert_login_success(test_login_success):
     assert test_login_success["token_type"] is not None
     assert test_login_success["access_token"] is not None
