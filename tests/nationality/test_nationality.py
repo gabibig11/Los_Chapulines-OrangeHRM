@@ -10,7 +10,6 @@ from src.assertions.nationality_assertions import AssertionNationality
 def test_get_nationality_success(test_login):
     url = f'{system_url}{Endpoints.nationality_list.value}'
     print(f'URL {url}')
-    print(f'Token: {test_login}')
     headers = {'Authorization': f'{test_login}'}
     response = OrangeRequests().get(url, headers=headers)
     AssertionNationality.assert_status_code(response, 200)
@@ -37,6 +36,7 @@ def test_get_nationality_invalid_token():
 #Verificar que la solicitud con un token válido y parámetros válidos retorne un estado 200
 def test_get_nationality_valid_token_and_parameters(test_login):
     url = f'{system_url}{Endpoints.nationality_list.value}'
+    print(f'Token: {test_login}')
     headers = {'Authorization': test_login}
     params = {
         "limit": 10,
@@ -51,6 +51,7 @@ def test_get_nationality_valid_token_and_parameters(test_login):
 #Verificar que la solicitud retorna la estructura JSON esperada
 def test_nationality_json_structure(test_login):
     url = f'{system_url}{Endpoints.nationality_list.value}'
+    print(f'Token: {test_login}')
     headers = {'Authorization': f'{test_login}'}
     orange_requests = OrangeRequests()
     response = orange_requests.get(url, headers=headers)
