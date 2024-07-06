@@ -28,5 +28,5 @@ def test_expired_token():
     response = OrangeRequests().post(url, headers=headers)
     assert response.status_code == 401
 
-#Verificar que no se pueda agregar un status laboral con más de 60 caracteres
+
 
