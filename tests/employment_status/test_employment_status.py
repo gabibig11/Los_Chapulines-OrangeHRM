@@ -11,7 +11,6 @@ import jsonschema
 from src.orangeHRM_api.api_requests import OrangeRequests
 
 @pytest.mark.smoke
-@pytest.mark.funtional
 def test_employment_status_token(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
     #print(url)
@@ -20,7 +19,6 @@ def test_employment_status_token(test_login):
     response_json = response.json()
     assert response.status_code == 200
 
-@pytest.mark.funtional
 def test_limit(test_login):
     limit = 2
     url = f'{system_url}{Endpoints.employment_status.value}?limit={limit}'
@@ -30,7 +28,7 @@ def test_limit(test_login):
     assert_employment_status_succesfuly(response)
     assert len(response_json['data']) == limit
 
-@pytest.mark.funtional
+
 def test_sortingOrder(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?limit=10&sortingOrder=ASC'
     headers = {'Authorization': f'{test_login}'}
@@ -38,7 +36,7 @@ def test_sortingOrder(test_login):
     response_data = response.json()
 
     assert response_data['data'] is not None
-@pytest.mark.funtional
+
 
 def test_sortingFeild(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?limit=10&sortingFeild=id'
@@ -46,7 +44,7 @@ def test_sortingFeild(test_login):
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response_data['data'] is not None
-@pytest.mark.funtional
+
 def test_limit_offset(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?limit=10&offset=2'
     headers = {'Authorization': f'{test_login}'}
@@ -54,7 +52,7 @@ def test_limit_offset(test_login):
     response_data = response.json()
     assert response_data['data'] is not None
 
-@pytest.mark.funtional
+
 def test_sortingFeild_sortingOrder(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?sortingFeild=id&sortingOrder=ASC'
     headers = {'Authorization': f'{test_login}'}
@@ -62,7 +60,7 @@ def test_sortingFeild_sortingOrder(test_login):
     response_data = response.json()
     assert response_data['data'] is not None
 
-@pytest.mark.funtional
+
 def test_all(test_login):
 
     url = f'{system_url}{Endpoints.employment_status.value}?limit=4&offset=2&sortingFeild=id&sortingOrder=ASC'
@@ -70,7 +68,7 @@ def test_all(test_login):
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response_data['data'] is not None
-@pytest.mark.funtional
+
 def test_expired_token():
 
     url = f'{system_url}{Endpoints.employment_status.value}'
@@ -78,13 +76,13 @@ def test_expired_token():
     response = OrangeRequests().get(url, headers=headers)
     assert response.status_code == 401
 
-@pytest.mark.funtional
+
 def test_invalid_token():
     url = f'{system_url}{Endpoints.employment_status.value}'
     headers = {'Authorization': 'invalid_token'}
     response = OrangeRequests().get(url, headers=headers)
     assert response.status_code == 401
-@pytest.mark.funtional
+
 def test_invalid_param(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?invalidFilter=invalidFilterValue'
     headers = {'Authorization': f'{test_login}'}
