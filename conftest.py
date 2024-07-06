@@ -1,3 +1,5 @@
+import json
+
 import pytest
 import requests
 from config import system_url
@@ -17,7 +19,23 @@ def test_login():
     assert_login_success(response_data)
     token = f'{response_data["token_type"]} {response_data["access_token"]}'
     def login_teardown():
-        print("Eliminar token")
+        print("Token eliminado")
+
     yield token
     login_teardown()
-    return token
+    #return token
+
+
+def post_teardown(url, headers, response, attribute):
+    response_data = response.json()
+    #Obtener el valor del id del objeto creado, asegurarnos que se quede como string y no int
+    id_location = str(response_data['data']['id'])
+    #Obtener la concadenacion de el atributo que se necesita para borrar y el id
+    value_delete = {attribute: id_location}
+    #Asegurarnos que la concadenacion este en json
+    json_delete = json.dumps(value_delete)
+    response_delete = OrangeRequests().delete(url=url, headers=headers, data=json_delete)
+    assert response_delete.status_code == 204
+
+
+
