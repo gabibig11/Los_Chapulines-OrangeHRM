@@ -16,3 +16,19 @@ def assert_get_job_categories_schema(response):
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f"JSON schema dont match {err}")
+
+def assert_get_job_asc(response):
+    response_json = response.json()
+    response_data = response_json["data"]
+    for i in range(len(response_data) - 1):
+        current_id = int(response_data[i]["id"])
+        next_id = int(response_data[i+1]["id"])
+        assert current_id < next_id
+
+def assert_get_job_desc(response):
+    response_json = response.json()
+    response_data = response_json["data"]
+    for i in range(len(response_data) - 1):
+        current_id = int(response_data[i]["id"])
+        next_id = int(response_data[i+1]["id"])
+        assert current_id > next_id
