@@ -9,3 +9,7 @@ class OrangeRequests:
     def post(self, url, headers=None, params=None, data=None):
         response = requests.post(url, headers=headers, params=params, data=data)
         return response
+    
+    def delete(self, url, headers=None, params=None, data=None):
+        response = requests.delete(url, headers=headers, params=params, data=data)
+        return response
