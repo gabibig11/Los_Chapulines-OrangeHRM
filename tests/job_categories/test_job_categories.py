@@ -115,3 +115,4 @@ def test_job_categories_filter_by_all_param(test_login):
     assert len(response_data) == limit
     assert all([int(response_data[i]["id"]) < int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
     assert response_data == response_without_offset_data[offset:offset+limit]
+
