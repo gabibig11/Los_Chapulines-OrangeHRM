@@ -1,3 +1,5 @@
+import json
+
 import pytest
 import requests
 from config import system_url
@@ -17,12 +19,12 @@ def test_login():
     assert_login_success(response_data)
     token = f'{response_data["token_type"]} {response_data["access_token"]}'
     def login_teardown():
-        print("Eliminar token")
+        print("Token eliminado")
+
     yield token
     login_teardown()
-    return token
 
-
+    #return token
 
 
 
@@ -37,6 +39,7 @@ def post_teardown(url, headers, response, attribute):
     response_delete = OrangeRequests().delete(url=url, headers=headers, data=json_delete)
     assert response_delete.status_code == 204
 
+
 def post_teardown_diego(url, headers, value, attribute, array=None):
     #Obtenemos el id del objeto
     id = str(value)
@@ -47,3 +50,4 @@ def post_teardown_diego(url, headers, value, attribute, array=None):
     response_delete = OrangeRequests().delete_diego(url=url, headers=headers, data=payload)
     assert response_delete.status_code == 204
     print(f'ID de vacante eliminada: {id}')
+
