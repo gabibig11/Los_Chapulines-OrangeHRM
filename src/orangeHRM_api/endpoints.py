@@ -13,3 +13,4 @@ class Endpoints(Enum):
     subunits = "/api/subunits"
 
     postvacancy='/api/recruitment/vacancies'
+    postcustormer='/api/customers'
