@@ -23,7 +23,9 @@ def test_login():
 
     yield token
     login_teardown()
+
     #return token
+
 
 
 def post_teardown(url, headers, response, attribute):
@@ -38,4 +40,14 @@ def post_teardown(url, headers, response, attribute):
     assert response_delete.status_code == 204
 
 
+def post_teardown_diego(url, headers, value, attribute, array=None):
+    #Obtenemos el id del objeto
+    id = str(value)
+    #Obtener la concadenacion del atributo que se necesita para borrar y el id
+    #El parametro array no es necesario pasarlo
+    json_value=([id] if array==True else id)
+    payload = {attribute: json_value}
+    response_delete = OrangeRequests().delete_diego(url=url, headers=headers, data=payload)
+    assert response_delete.status_code == 204
+    print(f'ID de vacante eliminada: {id}')
 
