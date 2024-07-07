@@ -1,0 +1,17 @@
+Index: tests/employment_status/test_employment_status_post.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import json\nimport pytest\nfrom conftest import *\nfrom src.assertions.location_assertions import *\nfrom src.orangeHRM_api.endpoints import Endpoints\n\n#Verificar que se pueda agregar un status laboral\n@pytest.mark.smoke7\ndef test_employment_status_add(test_login):\n    url = f'{system_url}{Endpoints.employment_status.value}'\n    headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}\n    payload = json.dumps({\n\n            \"name\": \"Martina\"\n        })\n\n    response = OrangeRequests().post(url=url, headers=headers, data=payload)\n    assert response.status_code == 201\n    #response_json = response.json()\n    post_teardown(url=url, headers=headers, response=response, attribute=\"data\")\n\n\n#erificar si se puede agregar un status laboras con un toquen expirado\ndef test_expired_token():\n\n    url = f'{system_url}{Endpoints.employment_status.value}'\n    headers = {'Authorization': 'Bearer 6e81dcf8cd0f3651d393f712e6ee332b30a4ed2d'}\n    response = OrangeRequests().post(url, headers=headers)\n    assert response.status_code == 401\n\n\n\n
+===================================================================
+diff --git a/tests/employment_status/test_employment_status_post.py b/tests/employment_status/test_employment_status_post.py
+--- a/tests/employment_status/test_employment_status_post.py	
++++ b/tests/employment_status/test_employment_status_post.py	
+@@ -5,7 +5,7 @@
+ from src.orangeHRM_api.endpoints import Endpoints
+ 
+ #Verificar que se pueda agregar un status laboral
+-@pytest.mark.smoke7
++@pytest.mark.smoke
+ def test_employment_status_add(test_login):
+     url = f'{system_url}{Endpoints.employment_status.value}'
+     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
