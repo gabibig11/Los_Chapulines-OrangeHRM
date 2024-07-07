@@ -10,11 +10,11 @@ from src.assertions.nationality_assertions import AssertionNationality
 def test_post_nationality_success(test_login):
     url = f'{system_url}{Endpoints.nationality_list.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({"name": "Catan"})
+    data = {"name": "Catan"}
+    AssertionNationality.assert_nationality_post_schema(data) == True
+    payload = json.dumps(data)
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     AssertionNationality.assert_status_code(response, 201)
-    print("Response Status Code:", response.status_code)
-    print("Response Body:", response.json())
     response_json = response.json()
     AssertionNationality.assert_json_structure(response_json)
     AssertionNationality.assert_data_keys([response_json['data']])

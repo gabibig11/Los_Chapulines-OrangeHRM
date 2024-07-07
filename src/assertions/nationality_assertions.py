@@ -2,7 +2,6 @@ import jsonschema
 import pytest
 from src.utils.load_resources import load_schema_resource
 
-
 class AssertionNationality:
     @staticmethod
     def assert_status_code(response, expected_status_code):
@@ -74,4 +73,10 @@ class AssertionNationality:
             for key, value in item.items():
                 assert value is not None and value != '', f"Field '{key}' in item {item} is empty or None"
 
-
+    def assert_nationality_post_schema(nationality_post):
+        schema = load_schema_resource("nationality_post.json")
+        try:
+            jsonschema.validate(instance=nationality_post, schema=schema)
+            return True
+        except jsonschema.exceptions.ValidationError as err:
+            pytest.fail(f'error: {err}')
