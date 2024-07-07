@@ -39,6 +39,16 @@ def post_teardown(url, headers, response, attribute):
     response_delete = OrangeRequests().delete(url=url, headers=headers, data=json_delete)
     assert response_delete.status_code == 204
 
+def post_teardown_diego(url, headers, value, attribute, array=None):
+    #Obtenemos el id del objeto
+    id = str(value)
+    #Obtener la concadenacion del atributo que se necesita para borrar y el id
+    #El parametro array no es necesario pasarlo
+    json_value=([id] if array==True else id)
+    payload = {attribute: json_value}
+    response_delete = OrangeRequests().delete(url=url, headers=headers, data= json.dumps(payload))
+    assert response_delete.status_code == 204
+
 
 def post_teardown_diego(url, headers, value, attribute, array=None):
     #Obtenemos el id del objeto
