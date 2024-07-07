@@ -4,29 +4,32 @@ import pytest
 from conftest import *
 from src.assertions.location_assertions import *
 
-@pytest.mark.smoke()
-def test_location_post_sucess(test_login):
+@pytest.mark.smoke
+def test_location_post_success(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload= json.dumps({
-              "name":"gabibi.com",
-              "city":"Cercado",
-              "phone":"12345",
+    payload = {
+              "name":"diego.com",
+              "city":"Cercado/Cochabamba",
+              "phone":"12345678",
               "time_zone":"Pacific/Midway",
               "province":"Province of the location",
               "state":"State of the location",
               "address":"test",
-              "zipCode":"12345",
-              "fax":"12345",
-              "notes":"test",
+              "zipCode":"12345678",
+              "fax":"12345678",
+              "notes":"test_success",
               "countryCode":"AU",
               "eeo_applicable": 0
-            })
-    response = OrangeRequests().post(url=url, headers=headers, data=payload)
-    assert response.status_code ==201
+            }
 
-
-    post_teardown(url=url, headers=headers, response=response, attribute="data")
+    assert assert_location_schema_post(payload) == True
+    payload_json = json.dumps(payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload_json)
+    assert response.status_code == 201
+    response_data= response.json()
+    value=response_data['data']['id']
+    post_teardown_diego(url=url, headers=headers, value=value, attribute="data", array=True)
 
 
 def test_post_location_without_name(test_login):
@@ -170,7 +173,7 @@ def test_location_post_limit_maximum(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = json.dumps({
-        "name": "cieeeeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "name": "cieeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "city": "ciuuuuuuuuudaaaaaaaaaaddddddddddgraaaaaaaaaaandee",
         "phone": "40 300 800 444 700 200 100 500",
         "time_zone": "Pacific/Midway",
@@ -185,4 +188,6 @@ def test_location_post_limit_maximum(test_login):
     })
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 201
-    post_teardown(url=url, headers=headers, response=response, attribute="data")
+    response_data = response.json()
+    value = response_data['data']['id']
+    post_teardown_diego(url=url, headers=headers, value=value, attribute="data", array=True)
