@@ -38,6 +38,9 @@ def post_teardown(url, headers, response, attribute_search, attribute_delete, ar
     response_delete = OrangeRequests().delete(url=url, headers=headers, data=payload)
     assert response_delete.status_code == 204
 
+def delete_teardown(url, headers, body):
+    response= OrangeRequests().post(url=url, headers=headers, data=body)
+    assert response.status_code == 201
 
 @pytest.fixture (scope='session')
 def setup_patchusers(test_login): 
@@ -59,3 +62,4 @@ def setup_patchusers(test_login):
         print(f'{user_id} restaurado')
     yield user_id
     teardown_patchusers()
+
