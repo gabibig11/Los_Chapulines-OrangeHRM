@@ -32,3 +32,10 @@ def assert_add_job_categories_schema(response):
         pytest.fail(f"JSON schema dont match {err}")
 
 
+def assert_add_job_categries_schema_input(payload):
+    schema = load_schema_resource("job_categories_schema_add_input.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False

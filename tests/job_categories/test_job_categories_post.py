@@ -1,6 +1,6 @@
 from config import system_url, random_token, expired_token
 from src.orangeHRM_api.endpoints import Endpoints
-from src.assertions.job_categories_assertions import assert_job_categories_created, assert_add_job_categories_schema
+from src.assertions.job_categories_assertions import assert_job_categories_created, assert_add_job_categories_schema, assert_add_job_categries_schema_input
 import json
 from src.orangeHRM_api.api_requests import OrangeRequests
 from conftest import post_teardown
@@ -15,10 +15,8 @@ def test_job_categories_add_success(test_login):
 
     url = f'{system_url}{Endpoints.job_categories.value}'
     headers = {'Authorization': f'{test_login}'}
+    assert assert_add_job_categries_schema_input(data) == True
     response = OrangeRequests().post(url=url, headers=headers, data=data)
-    response_json = response.json()
-    response_data = response_json["data"]
-
     assert_job_categories_created(response)
     assert_add_job_categories_schema(response)
     post_teardown(url=url, headers=headers, response=response.json(), attribute_search="id", attribute_delete="data", array=True)
