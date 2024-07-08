@@ -27,7 +27,6 @@ def test_login():
     #return token
 
 
-
 def post_teardown(url, headers, response, attribute_search, attribute_delete, array=None):
     # Obtenemos el id del objeto
     id=str(response['data'][attribute_search])
