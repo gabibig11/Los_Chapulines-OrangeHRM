@@ -43,7 +43,8 @@ def post_teardown(url, headers, response, attribute_search, attribute_delete, ar
 def setup_patchusers(test_login): 
     user_id='163'
     print(f'comienzan las modificaciones en {user_id}')
-    payload = {    
+    payload = {
+        "user_name": "Albertito",
         "essrole": "2",
         "supervisorrole": "3",
         "changepassword": "true",
