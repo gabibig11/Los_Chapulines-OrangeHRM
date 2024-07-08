@@ -16,16 +16,15 @@ def test_postcustomer_success(test_login): # test1 agrega un cliente nuevo en ba
         "name": "Jalasoft Company",
         "description": "Software developer company"
     }
-    data=json.dumps(payload)
     assert_postcustomer_payload_schema(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 201
     assert_postcustomer_schema(response_data)
     customerId = response_data['data']['customerId']
     #print(vacancyId)
     #print(response_data)
-    post_teardown_diego(url=url, headers=headers, value=customerId, attribute='ids', array=True)
+    post_teardown(url=url, headers=headers, response=response_data, attribute_search='customerId', attribute_delete='ids', array=True)
 
 
 def test_postcustomer_not_supported_properties(test_login): # test2 error al agregar un cliente nuevo con propiedades no soportadas
@@ -37,8 +36,7 @@ def test_postcustomer_not_supported_properties(test_login): # test2 error al agr
         "description": "Software developer company",
         "invalidPropertie": "invalid"
     }
-    data=json.dumps(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 422
     assert response_data['message'] == 'Invalid Data Submitted'
@@ -51,8 +49,7 @@ def test_postcustomer_name_already_exists(test_login): # test3 error al agregar 
         "name": "Apache Software Foundation",
         "description": "Software developer company"
     }
-    data=json.dumps(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 409
 
@@ -66,14 +63,13 @@ def test_postcustomer_whith_costCentreId_propertie(test_login):  # test4 agregar
         "description": "Software developer company",
         "costCentreId": "1"
     }
-    data = json.dumps(payload)
     assert_postcustomer_payload_schema(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 201
     assert_postcustomer_schema(response_data)
     customerId = response_data['data']['customerId']
-    post_teardown_diego(url=url, headers=headers, value=customerId, attribute='ids', array=True)
+    post_teardown(url=url, headers=headers, response=response_data, attribute_search='customerId', attribute_delete='ids', array=True)
 
 def test_postcustomer_whith_costCentreId_propertie_invalid(test_login):  # test5 error al agregar un cliente nuevo con "costCentreId" con valor invalido
     token = test_login
@@ -84,8 +80,7 @@ def test_postcustomer_whith_costCentreId_propertie_invalid(test_login):  # test5
         "description": "Software developer company",
         "costCentreId": "invalid"
     }
-    data = json.dumps(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 422
     assert response_data['message'] == 'Invalid Data Submitted'
@@ -100,14 +95,13 @@ def test_postcustomer_whith_costCentreId_propertie_and_include(test_login):  # t
         "description": "Software developer company",
         "costCentreId": "1"
     }
-    data = json.dumps(payload)
     assert_postcustomer_payload_schema(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 201
     assert_postcustomer_schema(response_data)
     customerId = response_data['data']['customerId']
-    post_teardown_diego(url=url, headers=headers, value=customerId, attribute='ids', array=True)
+    post_teardown(url=url, headers=headers, response=response_data, attribute_search='customerId', attribute_delete='ids', array=True)
 
 def test_postcustomer_whith_costCentreId_propertie_invalid_and_inlclude(test_login):  # test7 agregar un cliente nuevo con "costCentreId" con valor invalido e include=CostCentre en el url
     token = test_login
@@ -118,8 +112,7 @@ def test_postcustomer_whith_costCentreId_propertie_invalid_and_inlclude(test_log
         "description": "Software developer company",
         "costCentreId": "invalid"
     }
-    data = json.dumps(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 422
     assert response_data['message'] == 'Invalid Data Submitted'
@@ -132,9 +125,8 @@ def test_postcustomer_invalid_token(): # test8 error al agregar un cliente con t
         "name": "Jalasoft Company",
         "description": "Software developer company"
     }
-    data=json.dumps(payload)
     assert_postcustomer_payload_schema(payload)
-    response = OrangeRequests().post(url=url, headers=headers, data=data)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 401
 
 

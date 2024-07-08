@@ -20,7 +20,7 @@ def test_patchusers_success(test_login, setup_patchusers): # test1 editar un usu
         "confirmpassword": "albertitoTest13"
     }
     assert_patchusers_payload_schema(payload)
-    response=OrangeRequests().patch_diego(url=url, headers=headers, data=payload)
+    response=OrangeRequests().patch(url=url, headers=headers, data=payload)
     response_data=response.json()
     assert response.status_code==200
     assert_patchusers_schema(response_data)
