@@ -24,10 +24,11 @@ def assert_get_job_categories_schema(response):
 
 
 def assert_add_job_categories_schema(response):
-    # SUSANA no olvide cambiar job_categories_schema.json por tu nuevo schema
     schema = load_schema_resource("job_categories_schema_add.json")
     try:
         jsonschema.validate(instance=response.json(), schema=schema)
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f"JSON schema dont match {err}")
+
+
