@@ -18,7 +18,8 @@ def assert_location_schema_post(payload):
         jsonschema.validate(instance=payload, schema=schema)
         return True
     except jsonschema.exceptions.ValidationError as err:
-        pytest.fail(f'Se presento un error: {err}')
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
 
 def assert_location_id_schema(response):
     schema = load_schema_resource("location_id_schema.json")
