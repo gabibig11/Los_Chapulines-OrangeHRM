@@ -2,21 +2,24 @@ import json
 import pytest
 from conftest import *
 from src.assertions.employment_status_assertions import *
+from config import system_url, random_token, expired_token
 from src.orangeHRM_api.endpoints import Endpoints
+from src.orangeHRM_api.api_requests import OrangeRequests
+from conftest import post_teardown
 
 #1Verificar que se pueda agregar un status laboral
 @pytest.mark.smoke
 def test_employment_status_add(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
-    headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
+    headers = {'Authorization': f'{test_login}'}
     payload = {
 
-            "name": "LuquitasMosqueraGutierrez"
+            "name": "karokkarol"
         }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 201
-
-
+    post_teardown(url=url, headers=headers, response=response.json(), attribute_search="id", attribute_delete="data",
+                  array=True)
 
 #2Verificar que no se pueda agregar un status que ya esta agregado
 def test_employment_status_already_added(test_login):
@@ -24,7 +27,7 @@ def test_employment_status_already_added(test_login):
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
 
-        "name": "MauricioChaconLujan"
+        "name": "maritzaillanesqqq"
     }
 
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
