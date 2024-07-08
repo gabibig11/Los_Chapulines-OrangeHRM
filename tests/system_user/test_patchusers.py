@@ -8,7 +8,7 @@ from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
 
 
-@pytest.mark.elupdate
+@pytest.mark.smoke
 def test_patchusers_success(test_login, setup_patchusers): # test1 editar un usuario existente del sistema
     token=test_login
     user_id=setup_patchusers
