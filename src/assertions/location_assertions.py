@@ -5,15 +5,32 @@ import jsonschema
 from src.utils.load_resources import load_schema_resource
 
 def assert_location_schema(response):
-    schema = load_schema_resource("location_schema.json")
+    schema = load_schema_resource("location_schema_get.json")
     try:
         jsonschema.validate(instance=response, schema=schema)
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
 
+def assert_location_schema_post(payload):
+    schema = load_schema_resource("location_schema_post_input.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
+def assert_location_schema_post_reponse(payload):
+    schema = load_schema_resource("location_schema_post_output.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
+
 def assert_location_id_schema(response):
-    schema = load_schema_resource("location_id_schema.json")
+    schema = load_schema_resource("location_id_schema_get.json")
     try:
         jsonschema.validate(instance=response, schema=schema)
         return True
@@ -67,3 +84,4 @@ def assert_offset_orderby(response_orig, response_comp, offset):
     print(obj_ori)
     print(obj_comp)
     assert obj_ori == obj_comp
+

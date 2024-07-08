@@ -1,0 +1,99 @@
+{
+    "type": "object",
+    "required": [
+        "data"
+    ],
+    "properties": {
+        "data": {
+            "type": "object",
+            "required": [
+                "address",
+                "city",
+                "country",
+                "countryCode",
+                "eeo_applicable",
+                "fax",
+                "id",
+                "name",
+                "notes",
+                "numberOfEmployees",
+                "phone",
+                "province",
+                "time_zone",
+                "zipCode"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "countryCode": {
+                    "type": "string"
+                },
+                "time_zone": {
+                    "type": "string"
+                },
+                "province": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "zipCode": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "fax": {
+                    "type": "string"
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "eeo_applicable": {
+                    "type": "integer"
+                },
+                "country": {
+                    "type": "object",
+                    "required": [
+                        "AttendancePayPolicies",
+                        "cou_code",
+                        "cou_name",
+                        "iso3",
+                        "name",
+                        "numcode"
+                    ],
+                    "properties": {
+                        "cou_code": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "cou_name": {
+                            "type": "string"
+                        },
+                        "iso3": {
+                            "type": "string"
+                        },
+                        "numcode": {
+                            "type": "string"
+                        },
+                        "AttendancePayPolicies": {
+                            "type": "array"
+                        }
+                    }
+                },
+                "numberOfEmployees": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
