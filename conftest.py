@@ -26,16 +26,14 @@ def test_login():
     #return token
 
 
-def post_teardown(url, headers, response, attribute):
-    response_data = response.json()
-    #Obtener el valor del id del objeto creado, asegurarnos que se quede como string y no int
-    id_location = str(response_data['data']['id'])
-    #Obtener la concadenacion de el atributo que se necesita para borrar y el id
-    value_delete = {attribute: id_location}
-    #Asegurarnos que la concadenacion este en json
-    json_delete = json.dumps(value_delete)
-    response_delete = OrangeRequests().delete(url=url, headers=headers, data=json_delete)
+def post_teardown(url, headers, response, attribute_search, attribute_delete, array=None):
+#Obtenemos el id del obieto
+    id=str(response['data'] [attribute_search])
+#El parametro array no es necesario pasarlo
+    json_value=([id] if array==True else id)
+    payload = {attribute_delete: json_value}
+#response_delete = OrangeRequests) .delete(url=url,
+    response_delete = OrangeRequests().delete(url=url, headers=headers, data=payload)
     assert response_delete.status_code == 204
-
 
 
