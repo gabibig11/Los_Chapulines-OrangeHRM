@@ -61,3 +61,23 @@ def post_teardown_diego(url, headers, value, attribute, array=None):
     assert response_delete.status_code == 204
     print(f'ID de vacante eliminada: {id}')
 
+
+@pytest.fixture (scope='session')
+def setup_patchusers(test_login): 
+    user_id='163'
+    print(f'comienzan las modificaciones en {user_id}')
+    payload = {    
+        "essrole": "2",
+        "supervisorrole": "3",
+        "changepassword": "true",
+        "password": "defaultPassword",
+        "confirmpassword": "defaultPassword"
+    }
+    def teardown_patchusers():
+        url = f'{system_url}{Endpoints.patchusers.value}{user_id}'
+        headers = {'Authorization': test_login, 'Content-Type': 'application/json'}
+        response=OrangeRequests().patch_diego(url=url, headers=headers, data=payload)
+        assert response.status_code==200
+        print(f'{user_id} restaurado')
+    yield user_id
+    teardown_patchusers()
