@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "jobTitleName": {
+      "type": "string"
+    },
+    "jobDescription": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "currentJobSpecification": {
+      "type": "string"
+    },
+    "jobSpecification": {
+      "type": "object",
+      "properties": {
+        "base64": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "filesize": {
+          "type": "string"
+        },
+        "filetype": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "base64",
+        "filename",
+        "filesize",
+        "filetype"
+      ]
+    }
+  },
+  "required": [
+    "jobTitleName",
+    "jobDescription",
+    "note",
+    "currentJobSpecification",
+    "jobSpecification"
+  ]
+}

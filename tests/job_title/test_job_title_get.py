@@ -2,12 +2,12 @@ import string
 import random
 import pytest
 import requests
-from config import system_url
+from config import system_url, random_token, expired_token
 from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
 from src.assertions.job_title_assertions import assert_job_title_auth_error, assert_job_titles_schema
 
-random_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
+# random_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=40))
 
 
 @pytest.mark.smoke
@@ -29,7 +29,7 @@ def test_job_title_no_token():
 
 
 @pytest.mark.parametrize("wrong_token, case", [(f'Bearer {random_token}', 1),  # test_job_title_invalid_token
-                                               ("Bearer da8c7430701fd54d0582de569b6fb3859c9a0fd0", 2),  #test_job_title_expired_token
+                                               (expired_token, 2),  #test_job_title_expired_token
                                                ("Bearer", 3)])  # test_job_title_incomplete_header
 def test_job_title_no_authorization(wrong_token, case):
     url = f'{system_url}{Endpoints.job_titles.value}'
@@ -38,7 +38,6 @@ def test_job_title_no_authorization(wrong_token, case):
     response_data = response.json()
     assert response.status_code == 401
     assert_job_title_auth_error(response_data, case)
-
 
 def test_schema_job(test_login):
     url = f'{system_url}/api/jobTitles?limit=1&offset=0&sortingField=id&sortingOrder=ASC'  # formato correcto

@@ -23,6 +23,7 @@ def test_login():
 
     yield token
     login_teardown()
+
     #return token
 
 
@@ -41,6 +42,5 @@ def post_teardown(url, headers, response, attribute_search, attribute_delete, ar
 def delete_teardown(url, headers, body):
     response= OrangeRequests().post(url=url, headers=headers, data=body)
     assert response.status_code == 201
-
 
 
