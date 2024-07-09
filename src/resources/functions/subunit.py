@@ -1,0 +1,19 @@
+
+import random
+import string
+import pytest
+from conftest import *
+
+def random_info(value):
+    data = ''.join(random.choices(string.ascii_lowercase + string.digits, k=value))
+    return data
+
+def set_up_delete(login):
+    url = f'{system_url}{Endpoints.subunits.value}'
+    headers = {'Authorization': f'{login}'}
+    params = {'limit': 1, 'sortingField': 'id'}
+    response = OrangeRequests().get(url, headers=headers, params=params)
+    response_data = response.json()
+    data = response_data["data"][0]
+    payload_id = data["id"]
+    return payload_id
