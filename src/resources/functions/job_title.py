@@ -6,7 +6,7 @@ import pytest
 from conftest import *
 
 
-def ramdom_info(value):
+def random_info(value):
     data = ''.join(random.choices(string.ascii_lowercase + string.digits, k=value))
     return data
 
