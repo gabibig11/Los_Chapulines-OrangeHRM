@@ -159,26 +159,26 @@ def test_post_location_invented_timezone(test_login):
 
 
 def test_location_post_maximum_exceed(test_login):
-    url = f'{system_url}{Endpoints.location.value}'
-    headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
+        url = f'{system_url}{Endpoints.location.value}'
+        headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
 
-    payload = {
-        "name": "cieeeeeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-        "city": "ciuuuuuuuuuudaaaaaaaaaaddddddddddgraaaaaaaaaaandee",
-        "phone": "400 300 800 444 700 200 100 500",
-        "time_zone": "Pacific/Midway",
-        "province": "prooooooooviiiiiinciiiiiiiaaaaaamuyyyyyyylargaaaaaa",
-        "state": "Caaaaalleeeeee waaaaaaalaaabeeee 402 Siiiidneeeyyyy",
-        "address": "Cccccccccaaaaaaaaaaaaaalleeeeeeeeeeeee waaaaaaalaaaaaaaaaaabbbbbbbbeeeeeeeeeeeeeeeee 402 Siiiiiiiiiiiiiiiiiiiidneeeeeeeeeeeeeeeyyyyyyyyyyeeeeeeeeeeeeeeeeeeeeeeeeesquuuuuuuuuuuuuuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 305",
-        "zipCode": "400 300 800 444 700 200 100 500",
-        "fax": "400 300 800 444 700 200 100 500",
-        "notes": "test",
-        "countryCode": "AU",
-        "eeo_applicable": 0
-    }
-    assert assert_location_schema_post(payload) == True
-    response = OrangeRequests().post(url=url, headers=headers, data=payload)
-    assert response.status_code == 400
+        payload = {
+            "name": "cieeeeeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "city": "ciuuuuuuuuuudaaaaaaaaaaddddddddddgraaaaaaaaaaandee",
+            "phone": "400 300 800 444 700 200 100 500",
+            "time_zone": "Pacific/Midway",
+            "province": "prooooooooviiiiiinciiiiiiiaaaaaamuyyyyyyylargaaaaaa",
+            "state": "Caaaaalleeeeee waaaaaaalaaabeeee 402 Siiiidneeeyyyy",
+            "address": "Cccccccccaaaaaaaaaaaaaalleeeeeeeeeeeee waaaaaaalaaaaaaaaaaabbbbbbbbeeeeeeeeeeeeeeeee 402 Siiiiiiiiiiiiiiiiiiiidneeeeeeeeeeeeeeeyyyyyyyyyyeeeeeeeeeeeeeeeeeeeeeeeeesquuuuuuuuuuuuuuiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiinaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 305",
+            "zipCode": "400 300 800 444 700 200 100 500",
+            "fax": "400 300 800 444 700 200 100 500",
+            "notes": "test",
+            "countryCode": "AU",
+            "eeo_applicable": 0
+        }
+        assert assert_location_schema_post(payload) == True
+        response = OrangeRequests().post(url=url, headers=headers, data=payload)
+        assert response.status_code == 400
 
 
 def test_location_post_limit_maximum(test_login):

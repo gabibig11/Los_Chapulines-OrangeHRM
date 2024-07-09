@@ -54,3 +54,4 @@ def assert_job_title_delete_schema(job_title_delete):
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
+

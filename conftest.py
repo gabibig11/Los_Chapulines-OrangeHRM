@@ -1,11 +1,13 @@
 import json
 
 import pytest
+import random
 import requests
 from config import system_url
 from src.assertions.login_assertions import assert_login_success
 from src.orangeHRM_api.api_requests import OrangeRequests
 from src.orangeHRM_api.endpoints import Endpoints
+from src.resources.functions.location import clean_data_location
 
 
 @pytest.fixture (scope='session')
@@ -42,7 +44,7 @@ def delete_teardown(url, headers, body):
     assert response.status_code == 201
 
 @pytest.fixture (scope='session')
-def setup_patchusers(test_login): 
+def setup_patchusers(test_login):
     user_id='163'
     print(f'comienzan las modificaciones en {user_id}')
     payload = {
@@ -61,4 +63,32 @@ def setup_patchusers(test_login):
         print(f'{user_id} restaurado')
     yield user_id
     teardown_patchusers()
+
+@pytest.fixture(scope='session')
+def set_up_patch_location(test_login):
+    url = f'{system_url}{Endpoints.location.value}'
+    headers = {'ent-Type': 'application/json', 'Authorization': f'{test_login}'}
+    response = OrangeRequests().get(url=url, headers=headers)
+    assert response.status_code == 200
+    data = response.json().get('data', [])
+    random_index = random.randint(0, 551)
+    random_object = data[random_index]
+    id_object = random_object['id']
+    print("  Locacion id:", id_object )
+    data_clean = clean_data_location(random_object)
+
+
+    def teardown_patch():
+        url_patch = f'{url}/{id_object}'
+        response = OrangeRequests().patch(url=url_patch, headers=headers, data=data_clean)
+        assert response.status_code == 200
+
+    yield id_object
+    teardown_patch()
+
+
+
+
+
+
 
