@@ -7,7 +7,7 @@ from config import system_url
 from src.assertions.login_assertions import assert_login_success
 from src.orangeHRM_api.api_requests import OrangeRequests
 from src.orangeHRM_api.endpoints import Endpoints
-from src.resources.functions.location import clean_data_location
+from src.resources.functions.location import *
 
 
 @pytest.fixture (scope='session')
@@ -68,15 +68,10 @@ def setup_patchusers(test_login):
 def set_up_patch_location(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'ent-Type': 'application/json', 'Authorization': f'{test_login}'}
-    response = OrangeRequests().get(url=url, headers=headers)
-    assert response.status_code == 200
-    data = response.json().get('data', [])
-    random_index = random.randint(0, 551)
-    random_object = data[random_index]
-    id_object = random_object['id']
+    random_object = object_random(url=url, headers=headers)
+    id_object= id_object_value(random_object=random_object)
     print("  Locacion id:", id_object )
     data_clean = clean_data_location(random_object)
-
 
     def teardown_patch():
         url_patch = f'{url}/{id_object}'

@@ -45,6 +45,13 @@ def assert_location_id_schema(response):
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
 
+def assert_location_schema_delete_input(payload):
+    schema = load_schema_resource("location_schema_delete_input.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
 
 def assert_location_filter(response, filter, value_filter):
     for item in response["data"]:
