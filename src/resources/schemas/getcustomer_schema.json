@@ -1,0 +1,55 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "meta"
+    ],
+    "properties": {
+        "data": {
+            "type": "object",
+            "required": [
+                "customerId",
+                "description",
+                "isDeleted",
+                "name"
+            ],
+            "properties": {
+                "customerId": {
+                    "type": "string"
+                },
+                "isDeleted": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "meta": {
+            "type": "object",
+            "required": [
+                "permissions"
+            ],
+            "properties": {
+                "permissions": {
+                    "type": "object",
+                    "required": [
+                        "delete",
+                        "update"
+                    ],
+                    "properties": {
+                        "delete": {
+                            "type": "boolean"
+                        },
+                        "update": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

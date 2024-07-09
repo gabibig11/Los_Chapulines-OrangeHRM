@@ -1,0 +1,79 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "meta"
+    ],
+    "properties": {
+        "data": {
+            "type": "object",
+            "required": [
+                "costCentre",
+                "customerId",
+                "description",
+                "isDeleted",
+                "name"
+            ],
+            "properties": {
+                "customerId": {
+                    "type": "string"
+                },
+                "isDeleted": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "costCentre": {
+                    "type": "object",
+                    "required": [
+                        "costCode",
+                        "id",
+                        "isDeleted",
+                        "name"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "costCode": {
+                            "type": "string"
+                        },
+                        "isDeleted": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "meta": {
+            "type": "object",
+            "required": [
+                "permissions"
+            ],
+            "properties": {
+                "permissions": {
+                    "type": "object",
+                    "required": [
+                        "delete",
+                        "update"
+                    ],
+                    "properties": {
+                        "delete": {
+                            "type": "boolean"
+                        },
+                        "update": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
