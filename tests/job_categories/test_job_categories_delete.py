@@ -8,7 +8,7 @@ from src.assertions.job_categories_assertions import assert_job_categories_delet
 def test_job_categories_delete(test_login):
 
     data = {
-        "name" : "fake job category3"
+        "name" : "fake job category44"
     }
 
     url = f'{system_url}{Endpoints.job_categories.value}'
@@ -18,9 +18,7 @@ def test_job_categories_delete(test_login):
     response_data = response_json["data"]
     created_id=response_data["id"]
     payload={"data" : [created_id]}
-    # assert assert_delete_job_categories_schema(payload) == True
     response_delete = OrangeRequests().delete(url=url, headers=headers, data=payload)
-    
     assert_job_categories_delete(response_delete)
 
 

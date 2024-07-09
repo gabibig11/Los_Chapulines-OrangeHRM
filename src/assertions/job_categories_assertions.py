@@ -52,3 +52,5 @@ def assert_delete_job_categories_schema(payload):
         return True
     except jsonschema.exceptions.ValidationError as err:
         return False
+    except jsonschema.exceptions.ValidationError as err:
+        pytest.fail(f"JSON schema dont match {err}")
