@@ -32,3 +32,12 @@ def assert_job_title_post_schema(job_title_post):
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
+
+
+def assert_job_title_delete_schema(job_title_delete):
+    schema = load_schema_resource("job_title_delete_schema.json")
+    try:
+        jsonschema.validate(instance=job_title_delete, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        pytest.fail(f'Se presento un error: {err}')
