@@ -6,13 +6,9 @@ import pytest
 
 from config import random_token, expired_token
 from conftest import *
-
-from src.assertions.job_title_assertions import assert_job_title_post_schema, assert_job_title_auth_error
-
-
-def ramdom_info(value):
-    data = ''.join(random.choices(string.ascii_lowercase + string.digits, k=value))
-    return data
+from src.resources.functions.job_title import ramdom_info
+from src.assertions.job_title_assertions import assert_job_title_post_schema, assert_job_title_auth_error, \
+    assert_job_title_post_response_schema, assert_job_title_labels_above_max_length
 
 # Tomar en cuenta que el único label obligatorio es jobTitleName para crear un jobTitle
 
@@ -35,18 +31,18 @@ def test_job_title_post_sucess(test_login):
             }
     }
     assert assert_job_title_post_schema(data) == True
-    payload = json.dumps(data)
-    response = OrangeRequests().post(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=data)
     print(response.json())
     assert response.status_code == 201
-    post_teardown(url=url, headers=headers, response=response, attribute="data")
+    assert assert_job_title_post_response_schema(response.json()) == True
+    post_teardown(url=url, headers=headers, response=response.json(), attribute_search="id", attribute_delete="data", array=True)
 
 
 def test_job_title_post_no_token():
     url = f'{system_url}{Endpoints.job_titles.value}'
-    payload = json.dumps({
+    payload = {
         "jobTitleName": "Respuesta de peticion automatizadaaa"
-    })
+    }
     response = OrangeRequests().post(url=url, data=payload)
     response_err = response.json()
     assert response.status_code == 401
@@ -59,7 +55,7 @@ def test_job_title_post_no_token():
 def test_job_title_post_no_authorization(wrong_token, case):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': wrong_token}
-    payload = json.dumps({"jobTitleName": "Respuesta de peticion automatizadaaa"})
+    payload = {"jobTitleName": "Respuesta de peticion automatizadaaa"}
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 401
@@ -75,10 +71,10 @@ def test_job_title_post_empty_payload(test_login):
 def test_job_title_post_no_jobTitleName_label(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
+    payload = {
         "jobDescription": "Verificar la estructura de la respuesta y su status",
         "note": "Not null"
-    })
+    }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 500
 
@@ -86,54 +82,54 @@ def test_job_title_post_no_jobTitleName_label(test_login):
 def test_job_title_post_no_jobTitleName_data(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({"jobTitleName": ""})
+    payload = {"jobTitleName": ""}
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
-    assert response_data["title"] == "unsupported resource request"
+    assert_job_title_labels_above_max_length(response_data)
     assert response_data["details"] == "jobTitleName [Required.]"
 
 def test_job_tile_post_jobTitleName_above_max_length(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
-        "jobTitleName": f'{ramdom_info(101)}'})
+    payload = {
+        "jobTitleName": f'{ramdom_info(101)}'}
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
-    assert response_data["title"] == "unsupported resource request"
+    assert_job_title_labels_above_max_length(response_data)
 
 
 def test_job_tile_post_jobDescription_above_max_length(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
+    payload = {
         "jobTitleName": "Respuesta de peticion automatizada",
         "jobDescription": ramdom_info(401)
-    })
+    }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
-    assert response_data["title"] == "unsupported resource request"
+    assert_job_title_labels_above_max_length(response_data)
 
 
 def test_job_tile_post_note_above_max_length(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
+    payload = {
         "jobTitleName": "Respuesta de peticion automatizada",
         "note": ramdom_info(401)
-    })
+    }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
-    assert response_data["title"] == "unsupported resource request"
+    assert_job_title_labels_above_max_length(response_data)
 
 
 def test_job_tile_post_filetype_not_allowed(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
+    payload = {
         "jobTitleName": "Respuesta de peticion automatizada",
         "jobSpecification":
             {
@@ -142,7 +138,7 @@ def test_job_tile_post_filetype_not_allowed(test_login):
                 "filesize": "2000",
                 "filetype": "application/csv"
             }
-    })
+    }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
@@ -152,7 +148,7 @@ def test_job_tile_post_filetype_not_allowed(test_login):
 def test_job_tile_post_filesize_above_max_size(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
+    payload = {
         "jobTitleName": "Respuesta de peticion automatizada",
         "jobSpecification":
             {
@@ -161,9 +157,8 @@ def test_job_tile_post_filesize_above_max_size(test_login):
                 "filesize": "5120000",
                 "filetype": "application/csv"
             }
-    })
+    }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
-    response_data = response.json()
     assert response.status_code == 400
 
 @pytest.mark.parametrize("currentJobSpecification", ["replaceCurrent", "deleteCurrent", "keepCurrent", "newAttachment"])
@@ -184,20 +179,20 @@ def test_job_tile_post_allowed_currentJobSpecification_values(test_login, curren
             }
     }
     assert assert_job_title_post_schema(data) == True
-    payload = json.dumps(data)
-    response = OrangeRequests().post(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=data)
     print(response.json())
     assert response.status_code == 201
-    post_teardown(url=url, headers=headers, response=response, attribute="data")
+    assert assert_job_title_post_response_schema(response.json()) == True
+    post_teardown(url=url, headers=headers, response=response.json(), attribute_search="id", attribute_delete="data", array=True)
 
 
 @pytest.mark.xfail(reason= "Se crea un cargo con valor no predeterminado encurrentJobSpecification -H302- Verificar respuesta con un valor no permitido en currentJobSpecificatio")
 def test_job_tile_post_invalid_currentJobSpecification_value(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    payload = json.dumps({
+    payload = {
         "jobTitleName": "Respuesta de peticion automatizada",
         "currentJobSpecification": f"{ramdom_info(14)}"
-    })
+    }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 400
