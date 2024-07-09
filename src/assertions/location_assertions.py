@@ -29,6 +29,14 @@ def assert_location_schema_post_reponse(payload):
         return False
         #pytest.fail(f'Se presento un error: {err}')
 
+def assert_location_schema_patch_success(payload):
+    schema = load_schema_resource("location_schema_patch_success.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
 def assert_location_id_schema(response):
     schema = load_schema_resource("location_id_schema_get.json")
     try:
