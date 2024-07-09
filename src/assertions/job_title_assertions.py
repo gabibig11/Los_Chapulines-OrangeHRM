@@ -34,6 +34,19 @@ def assert_job_title_post_schema(job_title_post):
         pytest.fail(f'Se presento un error: {err}')
 
 
+def assert_job_title_labels_above_max_length(response):
+    assert response["title"] == "unsupported resource request"
+
+
+def assert_job_title_post_response_schema(job_title_post):
+    schema = load_schema_resource("job_title_post_response.json")
+    try:
+        jsonschema.validate(instance=job_title_post, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        pytest.fail(f'Se presento un error: {err}')
+
+
 def assert_job_title_delete_schema(job_title_delete):
     schema = load_schema_resource("job_title_delete_schema.json")
     try:
