@@ -29,7 +29,6 @@ def test_login():
     #return token
 
 
-
 def post_teardown(url, headers, response, attribute_search, attribute_delete, array=None):
     # Obtenemos el id del objeto
     id=str(response['data'][attribute_search])
@@ -68,7 +67,7 @@ def setup_patchusers(test_login):
 @pytest.fixture(scope='session')
 def set_up_patch_location(test_login):
     url = f'{system_url}{Endpoints.location.value}'
-    headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
+    headers = {'ent-Type': 'application/json', 'Authorization': f'{test_login}'}
     response = OrangeRequests().get(url=url, headers=headers)
     assert response.status_code == 200
     data = response.json().get('data', [])
@@ -86,6 +85,7 @@ def set_up_patch_location(test_login):
 
     yield id_object
     teardown_patch()
+
 
 
 

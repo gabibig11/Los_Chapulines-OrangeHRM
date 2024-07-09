@@ -25,14 +25,14 @@ def test_postvacancy_success(test_login): # test1 agrega una vacante nueva en ba
         "requestConsent": "false"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 201
     assert_postvacancy_schema(response_data)
     vacancyId = response_data['data']['vacancyId']
     #print(vacancyId)
     #print(response_data)
-    post_teardown_diego(url=url, headers=headers, value=vacancyId, attribute='ids', array=True)
+    post_teardown(url=url, headers=headers, response=response_data, attribute_search='vacancyId', attribute_delete='ids', array=True)
 
 def test_postvacancy_success_resumeRequired_modified(test_login): # test2 agrega una vacante nueva en base al body de ejemplo con "resumeRequired" con "false"
     token = test_login
@@ -50,12 +50,12 @@ def test_postvacancy_success_resumeRequired_modified(test_login): # test2 agrega
         "requestConsent": "false"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 201
     assert_postvacancy_schema(response_data)
     vacancyId = response_data['data']['vacancyId']
-    post_teardown_diego(url=url, headers=headers, value=vacancyId, attribute='ids', array=True)
+    post_teardown(url=url, headers=headers, response=response_data, attribute_search='vacancyId', attribute_delete='ids', array=True)
 
 def test_postvacancy_success_requestConsent_modified(test_login): # test3 agrega una vacante nueva en base al body de ejemplo con "requestConsent" con "true"
     token = test_login
@@ -73,12 +73,12 @@ def test_postvacancy_success_requestConsent_modified(test_login): # test3 agrega
         "requestConsent": "true"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 201
     assert_postvacancy_schema(response_data)
     vacancyId = response_data['data']['vacancyId']
-    post_teardown_diego(url=url, headers=headers, value=vacancyId, attribute='ids', array=True)
+    post_teardown(url=url, headers=headers, response=response_data, attribute_search='vacancyId', attribute_delete='ids', array=True)
 
 
 def test_postvacancy_whithout_values(test_login): # test4 error al agregar una vacante nueva con propiedades con valores vacios
@@ -97,7 +97,7 @@ def test_postvacancy_whithout_values(test_login): # test4 error al agregar una v
         "requestConsent": ""
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
     assert_postvacancy_error_400_schema(response_data)
@@ -122,7 +122,7 @@ def test_postvacancy_whith_not_supported_properties(test_login): # test5 error a
         "NewInvalidPropertie": "Invalid"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
     assert_postvacancy_error_400_schema(response_data)
@@ -145,7 +145,7 @@ def test_postvacancy_vacancyName_already_exists(test_login): # test6 error al ag
         "requestConsent": "false"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
     assert_postvacancy_error_400_schema(response_data)
@@ -169,7 +169,7 @@ def test_postvacancy_invalid_token(): # test7 error al agregar una vacante nueva
         "requestConsent": "false"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 401
 
 
@@ -189,7 +189,7 @@ def test_postvacancy_void_token(): # test8 error al agregar una vacante nueva co
         "requestConsent": "false"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 401
 
 
@@ -209,7 +209,7 @@ def test_postvacancy_jobTitle_non_existent_value(test_login): # test9 error al a
         "requestConsent": "false"
     }
     assert_postvacancy_payload_schema(payload)
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 400
     assert_postvacancy_error_400_schema(response_data)
@@ -232,8 +232,8 @@ def test_postvacancy_import_from_template(test_login): # test10 agrega una vacan
         "noOfPositions" : "2",
         "hiringManager" : ["68","25"]
     }
-    response = OrangeRequests().post_diego(url=url, headers=headers, data=payload)
+    response = OrangeRequests().post(url=url, headers=headers, data=payload)
     #response_data = response.json()
     assert response.status_code == 201
     #vacancyId = response_data['data']['vacancyId']
-    #post_teardown_diego(url=url, headers=headers, value=vacancyId, attribute='ids', array=True)
+    #post_teardown(url=url, headers=headers, response=response_data, attribute_search='vacancyId', attribute_delete='ids', array=True)
