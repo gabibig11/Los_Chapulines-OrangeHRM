@@ -163,4 +163,4 @@ def test_patchusers_invalid_token(test_login, setup_patchusers): # test8 error a
     response_data=response.json()
     print(response.json())
     assert response.status_code == 401
-    assert 'invalid_request' in response_data['error']
+    assert 'invalid_token' in response_data['error']
