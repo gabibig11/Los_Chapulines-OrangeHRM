@@ -8,7 +8,7 @@ import pytest
 
 @pytest.mark.smoke
 def test_job_categories_add_success(test_login):
-    job_category_name = "Prueba Orange3"
+    job_category_name = "Prueba Orange43"
     data = {
         "name" : job_category_name
     }
