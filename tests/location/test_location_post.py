@@ -7,7 +7,6 @@ from src.orangeHRM_api.api_requests import OrangeRequests
 def test_location_post_success(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
               "name":"diego.com",
               "city":"Cercado/Cochabamba",
@@ -34,7 +33,6 @@ def test_location_post_success(test_login):
 def test_post_location_without_name(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    #payload = json.dumps({
     payload = {
         "city": "Cercado",
         "phone": "12345",
@@ -55,7 +53,6 @@ def test_post_location_without_name(test_login):
 def test_post_location_without_countryCode(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
         "name": "gabibi.com",
         "city": "Cercado",
@@ -77,7 +74,6 @@ def test_post_location_without_countryCode(test_login):
 def test_post_location_without_city(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
         "name": "gabibi.com",
         "phone": "12345",
@@ -98,7 +94,6 @@ def test_post_location_without_city(test_login):
 def test_post_location_without_zipCode(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
         "name": "gabibi.com",
         "city": "Cercado",
@@ -119,7 +114,6 @@ def test_post_location_without_zipCode(test_login):
 def test_post_location_without_timezone(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
         "name": "gabibi.com",
         "city": "Cercado",
@@ -140,7 +134,6 @@ def test_post_location_without_timezone(test_login):
 def test_post_location_invented_timezone(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
         "name": "gabibi.com",
         "city": "Cercado",
@@ -163,7 +156,7 @@ def test_post_location_invented_timezone(test_login):
 def test_location_post_maximum_exceed(test_login):
         url = f'{system_url}{Endpoints.location.value}'
         headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-        # payload = json.dumps({
+
         payload = {
             "name": "cieeeeeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             "city": "ciuuuuuuuuuudaaaaaaaaaaddddddddddgraaaaaaaaaaandee",
@@ -186,7 +179,6 @@ def test_location_post_maximum_exceed(test_login):
 def test_location_post_limit_maximum(test_login):
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
         "name": "cieeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "city": "ciuuuuuuuuudaaaaaaaaaaddddddddddgraaaaaaaaaaandee",
@@ -209,7 +201,6 @@ def test_location_post_limit_maximum(test_login):
 def test_location_post_without_field_non_mandatory(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
               "name":"diego.com",
               "city":"Cercado/Cochabamba",
@@ -232,7 +223,6 @@ def test_location_post_without_field_non_mandatory(test_login):
 def test_location_post_field_invented(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    # payload = json.dumps({
     payload = {
               "name":"diego.com",
               "city":"Cercado/Cochabamba",
@@ -255,7 +245,6 @@ def test_location_post_field_invented(test_login):
 def test_location_post_token_invented(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{random_token}'}
-    # payload = json.dumps({
     payload = {
               "name":"diego.com",
               "city":"Cercado/Cochabamba",
@@ -278,7 +267,6 @@ def test_location_post_token_invented(test_login):
 def test_location_post_token_expired(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{expired_token}'}
-    # payload = json.dumps({
     payload = {
               "name":"diego.com",
               "city":"Cercado/Cochabamba",
@@ -301,7 +289,6 @@ def test_location_post_token_expired(test_login):
 def test_location_post_without_token(test_login):
     url= f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json'}
-    # payload = json.dumps({
     payload = {
               "name":"diego.com",
               "city":"Cercado/Cochabamba",
