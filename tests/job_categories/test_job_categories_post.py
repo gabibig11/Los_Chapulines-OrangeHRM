@@ -98,14 +98,22 @@ def test_job_categories_add_name_only_numbers(test_login):
 
 
 def test_job_categories_add_invalid_token():
+    job_category_name = "Prueba"
+    data = {
+        "name" : job_category_name
+    }
     url = f'{system_url}{Endpoints.job_categories.value}'
     headers = {'Authorization': f'{random_token}'}
-    response = OrangeRequests().get(url, headers=headers)
+    response = OrangeRequests().post(url, headers=headers, data=data)
     assert response.status_code == 401
 
 
 def test_job_categories_add_expired_token():
+    job_category_name = "Prueba"
+    data = {
+        "name" : job_category_name
+    }
     url = f'{system_url}{Endpoints.job_categories.value}'
     headers = {'Authorization': f'{expired_token}'}
-    response = OrangeRequests().get(url, headers=headers)
+    response = OrangeRequests().post(url, headers=headers)
     assert response.status_code == 401
