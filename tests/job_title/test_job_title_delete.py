@@ -1,7 +1,7 @@
 
 from config import random_token, expired_token
 from conftest import *
-from src.resources.functions.job_title import ramdom_info, set_up_delete
+from src.resources.functions.job_title import random_info, set_up_delete
 from src.assertions.job_title_assertions import assert_job_title_delete_schema, assert_job_title_auth_error
 
 
@@ -52,7 +52,7 @@ def test_job_title_delete_without_token():
 def test_job_title_delete_incorrect_payload(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    data = {"id": [f'{ramdom_info(4)}']}
+    data = {"id": [f'{random_info(4)}']}
     response = OrangeRequests().delete(url, headers=headers, data=data)
     assert response.status_code == 400
 
@@ -67,7 +67,7 @@ def test_job_title_delete_without_payload(test_login):
 def test_job_title_delete_invalid_id(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
-    data = {"data": [f'{ramdom_info(4)}']}
+    data = {"data": [f'{random_info(4)}']}
     assert assert_job_title_delete_schema(data) == True
     response = OrangeRequests().delete(url, headers=headers, data=data)
     assert response.status_code == 400
