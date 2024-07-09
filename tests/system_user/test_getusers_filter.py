@@ -10,7 +10,7 @@ from src.orangeHRM_api.api_requests import OrangeRequests
 @pytest.mark.smoke
 def test_get_all_users(test_login):#test1 todos los usuarios al no poner parametro ni filtro
     token = test_login
-    users_counted=157
+    users_counted=162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     headers = {'Authorization': token}
     response = OrangeRequests().get(url, headers=headers)
@@ -112,7 +112,7 @@ def test_get_users_filter_invalid_employee_id(test_login):#test8 ningun usuario 
 def test_get_users_filter_ess_role_id(test_login):#test9 usuarios por filtro de Id de rol de usuario ESS REVISAR
     token = test_login
     user_role_id = '2'
-    users_counted = 156
+    users_counted = 161
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'filter[essrole]': user_role_id,
@@ -151,7 +151,7 @@ def test_gte_users_filter_ess_role_id_not_supported(test_login):#test11 error al
 
 def test_get_users_filter_supervisor_role_id(test_login):#test12 usuarios por filtro de id de rol de supervisor
     token = test_login
-    users_counted = 156
+    users_counted = 161
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'filter[supervisorrole]': 3,
@@ -227,7 +227,7 @@ def test_get_users_filter_admin_role_id_not_supported(test_login):#test17 error 
 
 def test_get_users_filter_status(test_login):#test18 usuarios por filtro de estatus
     token = test_login
-    users_counted = 157
+    users_counted = 162
     status = 1
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
@@ -292,7 +292,7 @@ def test_get_users_filter_invalid_location(test_login):#test22 ningun usuario po
     assert_count_users(response_data, users_counted)# apesar de la ubicacion inexistente, devuele el usuario admin
 def test_get_users_filter_include_deleted_false(test_login):#test23 usuario por filtro de eliminados en false
     token = test_login
-    users_counted = 157
+    users_counted = 162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'filter[includeDeleted]': 'false',
@@ -316,11 +316,11 @@ def test_get_users_filter_include_deleted_true(test_login):#test24 usuario por f
     response = OrangeRequests().get(url, headers=headers, params=params)
     response_data = response.json()
     assert response.status_code == 200
-    assert_count_users(response_data, users_counted)# devuelve los 157 users como si fuera false
+    assert_count_users(response_data, users_counted)# devuelve los 162 users como si fuera false
 
 def test_get_users_filter_order_field_id(test_login):#test25 usuarios ordenados por id
     token = test_login
-    users_counted = 157
+    users_counted = 162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'orderField': 'id',
@@ -335,7 +335,7 @@ def test_get_users_filter_order_field_id(test_login):#test25 usuarios ordenados 
 
 def test_get_users_filter_order_field_user_name(test_login):#test26 usuarios ordenados por nombre de usuario
     token = test_login
-    users_counted = 157
+    users_counted = 162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'orderField': 'user_name',
@@ -362,7 +362,7 @@ def test_get_users_filter_order_field_display_name(test_login):#test27 usuarios 
 
 def test_get_users_filter_order_field_employee_last_name(test_login):#test28 usuarios ordenados por apellido de empleado
     token = test_login
-    users_counted = 157
+    users_counted = 162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'orderField': 'emp_lastName',
@@ -376,7 +376,7 @@ def test_get_users_filter_order_field_employee_last_name(test_login):#test28 usu
 
 def test_get_users_filter_order_field_status(test_login):#test29 usuarios ordenados por estatus
     token = test_login
-    users_counted = 157
+    users_counted = 162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'orderField': 'status',
@@ -391,7 +391,7 @@ def test_get_users_filter_order_field_status(test_login):#test29 usuarios ordena
 
 def test_get_users_filter_include(test_login):#test29 usuarios con mas detalles de su informacion
     token = test_login
-    users_counted = 157
+    users_counted = 162
     url = f'{system_url}{Endpoints.getusers_filter.value}'
     params = {
         'include': 'Employee,UserUserRole,UserRole,Regions',
