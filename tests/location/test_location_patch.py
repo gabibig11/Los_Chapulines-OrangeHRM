@@ -162,7 +162,7 @@ def test_location_patch_maximum_exceed(test_login, set_up_patch_location):
     url = f'{system_url}{Endpoints.location.value}/{set_up_patch_location}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
-        "name": "cieeeeeeeeeeeeeeencaraaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "name": "cieeeeeeeeeeeeeeencaraaaaaaaaactersssssssssssssssssssnombreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "city": "ciuuuuuuuuuudaaaaaaaaaaddddddddddgraaaaaaaaaaandee",
         "phone": "400 300 800 444 700 200 100 500",
         "time_zone": "Pacific/Midway",

@@ -252,7 +252,7 @@ def test_location_post_field_invented(test_login):
     assert response.status_code == 400
 
 
-def test_location_post_token_invented(test_login):
+def test_location_post_token_invented():
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{random_token}'}
     payload = {
@@ -275,7 +275,7 @@ def test_location_post_token_invented(test_login):
     assert response.status_code == 401
 
 
-def test_location_post_token_expired(test_login):
+def test_location_post_token_expired():
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{expired_token}'}
     payload = {
@@ -298,7 +298,7 @@ def test_location_post_token_expired(test_login):
     assert response.status_code == 401
 
 
-def test_location_post_without_token(test_login):
+def test_location_post_without_token():
     url = f'{system_url}{Endpoints.location.value}'
     headers = {'Content-Type': 'application/json'}
     payload = {
