@@ -7,17 +7,18 @@ from src.orangeHRM_api.endpoints import Endpoints
 from src.orangeHRM_api.api_requests import OrangeRequests
 from conftest import post_teardown
 
-#1Verificar que se pueda agregar un status laboral
-@pytest.mark.smoke
+#Verificar que se pueda agregar un status laboral
+@pytest.mark.smoke7
 def test_employment_status_add(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
-    headers = {'Authorization': f'{test_login}'}
-    payload = {
-
-            "name": "karokkarol"
-        }
+    headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
+    payload = ({
+            "name": "Cualquiernombreeaaaaxxs"
+        })
+    assert assert_employment_status_schema_post(payload) == True
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 201
+    assert assert_employment_schema_post_reponse(response.json()) == True
     post_teardown(url=url, headers=headers, response=response.json(), attribute_search="id", attribute_delete="data",
                   array=True)
 
@@ -47,6 +48,7 @@ def test_employment_60_characters(test_login):
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 500
 
+
 #4Verificar que no se pueda agregar un estatus laboral de cero caracteres
 @pytest.mark.xfail(reason="agrega un status con 0 caracteres")
 def test_employment_0_characters(test_login):
@@ -75,7 +77,7 @@ def test_employment_1_characters(test_login):
 
 #6Verificar que no se acepte un numero al agregar un status laboral
 @pytest.mark.xfail(reason="agrega un status con caracteres numericos")
-def test_employment_1_characters(test_login):
+def test_employment_1n_characters(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
