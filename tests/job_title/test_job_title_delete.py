@@ -5,6 +5,7 @@ from src.resources.functions.job_title import ramdom_info, set_up_delete
 from src.assertions.job_title_assertions import assert_job_title_delete_schema, assert_job_title_auth_error
 
 
+@pytest.mark.smoke
 def test_job_title_delete_success(test_login):
     login = test_login
     url = f'{system_url}{Endpoints.job_titles.value}'
