@@ -15,3 +15,4 @@ class Endpoints(Enum):
     postvacancy='/api/recruitment/vacancies'
     postcustormer='/api/customers'
     patchusers='/api/systemUsers/'
+    getcustomer='/api/customers/'

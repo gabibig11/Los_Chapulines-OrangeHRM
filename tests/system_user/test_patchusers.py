@@ -146,7 +146,7 @@ def test_patchusers_mismatched_second_password(test_login, setup_patchusers): # 
 
 
 def test_patchusers_invalid_token(test_login, setup_patchusers): # test8 error al proporcionar token invalido
-    token=secrets.token_hex(16)
+    token=f'Bearer {secrets.token_hex(16)}'
     user_id=setup_patchusers
     url = f'{system_url}{Endpoints.patchusers.value}{user_id}'
     headers = {'Authorization': token, 'Content-Type': 'application/json'}
