@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "required": [
+        "messages"
+    ],
+    "properties": {
+        "messages": {
+            "type": "object",
+            "required": [
+                "success"
+            ],
+            "properties": {
+                "success": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

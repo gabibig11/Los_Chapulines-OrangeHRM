@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+      "essrole": {
+        "type": "string"
+      },
+      "supervisorrole": {
+        "type": "string"
+      },
+      "changepassword": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "confirmpassword": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "essrole",
+      "supervisorrole",
+      "changepassword",
+      "password",
+      "confirmpassword"
+    ]
+  }

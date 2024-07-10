@@ -5,21 +5,53 @@ import jsonschema
 from src.utils.load_resources import load_schema_resource
 
 def assert_location_schema(response):
-    schema = load_schema_resource("location_schema.json")
+    schema = load_schema_resource("location_schema_get.json")
     try:
         jsonschema.validate(instance=response, schema=schema)
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
 
+def assert_location_schema_post(payload):
+    schema = load_schema_resource("location_schema_post_input.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
+def assert_location_schema_post_reponse(payload):
+    schema = load_schema_resource("location_schema_post_output.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
+
+def assert_location_schema_patch_success(payload):
+    schema = load_schema_resource("location_schema_patch_success.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
+        #pytest.fail(f'Se presento un error: {err}')
 def assert_location_id_schema(response):
-    schema = load_schema_resource("location_id_schema.json")
+    schema = load_schema_resource("location_id_schema_get.json")
     try:
         jsonschema.validate(instance=response, schema=schema)
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
 
+def assert_location_schema_delete_input(payload):
+    schema = load_schema_resource("location_schema_delete_input.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        return False
 
 def assert_location_filter(response, filter, value_filter):
     for item in response["data"]:
@@ -33,8 +65,6 @@ def assert_count_obj(response, count):
     actual_count = len(response["data"])
     assert actual_count == count, f'La cantidad de elementos que devolvio la consulta ({actual_count}) no es igual a {count} esperados'
 
-def assert_ok(response):
-    assert response.status_code == 200
 
 def assert_data_empty(response):
     assert response["meta"]["total"] == 0
@@ -67,3 +97,4 @@ def assert_offset_orderby(response_orig, response_comp, offset):
     print(obj_ori)
     print(obj_comp)
     assert obj_ori == obj_comp
+

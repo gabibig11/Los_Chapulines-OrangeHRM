@@ -1,0 +1,46 @@
+{
+    "type": "object",
+    "required": [
+        "copyFromTemplate",
+        "hiringManager",
+        "jobTitle",
+        "location",
+        "noOfPositions",
+        "requestConsent",
+        "resumeRequired",
+        "subUnit",
+        "vacancyName"
+    ],
+    "properties": {
+        "copyFromTemplate": {
+            "type": "string"
+        },
+        "vacancyName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "subUnit": {
+            "type": "string"
+        },
+        "jobTitle": {
+            "type": "string"
+        },
+        "noOfPositions": {
+            "type": "string"
+        },
+        "hiringManager": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "resumeRequired": {
+            "type": "string"
+        },
+        "requestConsent": {
+            "type": "string"
+        }
+    }
+}
