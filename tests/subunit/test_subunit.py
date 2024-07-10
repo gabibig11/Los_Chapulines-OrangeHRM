@@ -20,14 +20,14 @@ def test_get_subunit_valid_id(test_login):
     assert response.status_code == 200
     response_data = response.json()
     assert response_data['data']['id'] == str(subunit_id)
-\
+
 def test_get_subunit_invalid_token():
     subunit_id = 1
     url = f'{system_url}{Endpoints.subunits.value}/{subunit_id}'
     headers = {'Authorization': 'Bearer invalid_token'}
     response = requests.get(url, headers=headers)
     assert response.status_code == 401
-\
+
 def test_get_subunit_no_token():
     subunit_id = 1
     url = f'{system_url}{Endpoints.subunits.value}/{subunit_id}'
