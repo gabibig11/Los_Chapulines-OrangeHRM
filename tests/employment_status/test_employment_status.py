@@ -19,7 +19,6 @@ def test_employment_status_token(test_login):
     response_json = response.json()
     assert response.status_code == 200
 
-
 def test_limit(test_login):
     limit = 2
     url = f'{system_url}{Endpoints.employment_status.value}?limit={limit}'
@@ -51,14 +50,12 @@ def test_limit_offset(test_login):
     response_data = response.json()
     assert response_data['data'] is not None
 
-
 def test_sortingFeild_sortingOrder(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?sortingFeild=id&sortingOrder=ASC'
     headers = {'Authorization': f'{test_login}'}
     response = requests.get(url, headers=headers)
     response_data = response.json()
     assert response_data['data'] is not None
-
 
 def test_all(test_login):
 
@@ -68,7 +65,6 @@ def test_all(test_login):
     response_data = response.json()
     assert response_data['data'] is not None
 
-
 def test_expired_token():
 
     url = f'{system_url}{Endpoints.employment_status.value}'
@@ -76,20 +72,17 @@ def test_expired_token():
     response = OrangeRequests().get(url, headers=headers)
     assert response.status_code == 401
 
-
 def test_invalid_token():
     url = f'{system_url}{Endpoints.employment_status.value}'
     headers = {'Authorization': 'invalid_token'}
     response = OrangeRequests().get(url, headers=headers)
     assert response.status_code == 401
 
-
 def test_invalid_param(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}?invalidFilter=invalidFilterValue'
     headers = {'Authorization': f'{test_login}'}
     response = OrangeRequests().get(url, headers=headers)
     assert response.status_code == 400
-
 
 def test_employment_status_schema(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
