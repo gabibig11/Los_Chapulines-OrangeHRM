@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "data": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "cost_centre_id": { "type": ["string", "null"] },
+                "description": { "type": ["string", "null"] },
+                "head_of_department_employee": { "type": ["string", "null"] },
+                "level": { "type": "string" },
+                "lft": { "type": "string" },
+                "rgt": { "type": "string" },
+                "unitId": { "type": ["string", "null"] }
+            },
+            "required": ["id", "name", "unitId", "level", "lft", "rgt"]
+        }
+    },
+    "required": ["data"],
+    "additionalProperties": false
+}
