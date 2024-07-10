@@ -97,7 +97,7 @@ def assert_nationality_delete_schema(payload):
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presento un error: {err}')
 
-def assert_nacionality_auth_error(response, n):
+def assert_nationality_auth_error(response, n):
     if n == 1:
         assert response["error"] == "invalid_token"
         assert response["error_description"] == "The access token provided is invalid"
@@ -108,10 +108,10 @@ def assert_nacionality_auth_error(response, n):
         assert response["error"] == 'invalid_request'
         assert response["error_description"] == "Malformed auth header"
 
-def assert_nacionality_delete_schema(nacionality_delete):
-    schema = load_schema_resource("nacionality_delete_schema.json")
+def assert_nationality_delete_schema(nationality_delete):
+    schema = load_schema_resource("nationality_delete_schema.json")
     try:
-        jsonschema.validate(instance=nacionality_delete, schema=schema)
+        jsonschema.validate(instance=nationality_delete, schema=schema)
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presentó un error de validación del esquema: {err}')
