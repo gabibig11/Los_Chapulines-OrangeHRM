@@ -2,13 +2,13 @@ import pytest
 
 import json
 
-
-from assertions.subunit_assertions import assert_subunit_auth_error, assert_subunit_delete_schema
 from config import system_url, random_token, expired_token
 from conftest import delete_teardown
-from orangeHRM_api.api_requests import OrangeRequests
-from orangeHRM_api.endpoints import Endpoints
-from resources.functions.subunit import set_up_delete, random_info
+from src.assertions.subunit_assertions import assert_subunit_delete_schema, assert_subunit_auth_error
+from src.orangeHRM_api.api_requests import OrangeRequests
+from src.orangeHRM_api.endpoints import Endpoints
+from src.resources.functions.subunit import set_up_delete
+from src.resources.functions.subunit import random_info
 
 
 @pytest.mark.xfail
@@ -68,4 +68,4 @@ def test_subunit_delete_invalid_id(test_login):
     data ={"data": [f'{random_info(4)}']}
     assert assert_subunit_delete_schema(data) == True
     response = OrangeRequests().delete(url, headers=headers, data=data)
-    assert response.status_code == 400
+    assert response.status_code==400
