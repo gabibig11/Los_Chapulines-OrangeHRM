@@ -320,9 +320,3 @@ def test_location_post_without_token():
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 401
 
-
-
-
-
-
-

@@ -65,8 +65,6 @@ def assert_count_obj(response, count):
     actual_count = len(response["data"])
     assert actual_count == count, f'La cantidad de elementos que devolvio la consulta ({actual_count}) no es igual a {count} esperados'
 
-def assert_ok(response):
-    assert response.status_code == 200
 
 def assert_data_empty(response):
     assert response["meta"]["total"] == 0
