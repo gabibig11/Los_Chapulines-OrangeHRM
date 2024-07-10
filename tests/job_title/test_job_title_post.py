@@ -8,8 +8,6 @@ from src.assertions.job_title_assertions import assert_job_title_post_schema, as
 # Tomar en cuenta que el único label obligatorio es jobTitleName para crear un jobTitle
 
 # Verificar que se pueda añadir un cargo laboral con todos los parámetros correctos. (**SMOKE**)
-
-
 @pytest.mark.smoke
 def test_job_title_post_success(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
