@@ -81,4 +81,3 @@ def test_nationality_delete_response_structure(test_login):
     payload = {"data": payload_ids[0]}
     response = OrangeRequests().delete(url, headers=headers, data=json.dumps(payload))
     assert response.status_code == 204
-
