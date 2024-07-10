@@ -59,6 +59,7 @@ def assert_subunit_list_with_cost_centre_id_filter(response):
     assert response.status_code == 200
 
 
+
 def assert_list_sorted(response):
     assert response.status_code == 200
 
@@ -80,3 +81,4 @@ def assert_subunit_delete_schema(subunit_delete):
         return True
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'Se presentó un error:{err}')
+

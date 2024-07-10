@@ -8,12 +8,12 @@ from src.orangeHRM_api.api_requests import OrangeRequests
 from conftest import post_teardown
 
 #Verificar que se pueda agregar un status laboral
-@pytest.mark.smoke7
+@pytest.mark.smoke
 def test_employment_status_add(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = ({
-            "name": "Cualquiernombreeaaaaxxs"
+            "name": "Cualquiernombreeaaaaxxhjksalllwwxxaa"
         })
     assert assert_employment_status_schema_post(payload) == True
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
@@ -28,21 +28,19 @@ def test_employment_status_already_added(test_login):
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
 
-        "name": "maritzaillanesqqq"
+        "name": "maritzaillanesqqqa"
     }
 
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 400
 
 #3Verificar que no se pueda agregar un status laboral con más de 60 caracteres
-
-@pytest.mark.xfail(reason="agrega un status con mas de 60 caracteres")
 def test_employment_60_characters(test_login):
     url = f'{system_url}{Endpoints.employment_status.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
 
-        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     }
 
     response = OrangeRequests().post(url=url, headers=headers, data=payload)

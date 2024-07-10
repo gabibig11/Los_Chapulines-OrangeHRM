@@ -3,10 +3,11 @@
   "properties": {
     "data": {
       "type": "array",
-      "items": 
+      "items": [
         {
           "type": "string"
         }
+      ]
     }
   },
   "required": [

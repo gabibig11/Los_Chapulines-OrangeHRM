@@ -29,3 +29,15 @@ def id_object_value(random_object):
     id_object = random_object['id']
     return id_object
 
+
+def limit_random(min_value, max_value):
+    num_random= random.randint(min_value, max_value)
+    return num_random
+
+def num_object(url, headers):
+    response= OrangeRequests().get(url=url, headers=headers)
+    data= response.json()
+    value_meta= data.get('meta', {})
+    value_total= value_meta.get('total', None)
+    return value_total
+

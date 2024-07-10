@@ -57,7 +57,7 @@ def setup_patchusers(test_login):
     }
     def teardown_patchusers():
         url = f'{system_url}{Endpoints.patchusers.value}{user_id}'
-        headers = {'Authorization': test_login, 'Content-Type': 'application/json'}
+        headers = {'Content-Type': 'application/json','Authorization': test_login}
         response=OrangeRequests().patch(url=url, headers=headers, data=payload)
         assert response.status_code==200
         print(f'{user_id} restaurado')
@@ -67,7 +67,7 @@ def setup_patchusers(test_login):
 @pytest.fixture(scope='session')
 def set_up_patch_location(test_login):
     url = f'{system_url}{Endpoints.location.value}'
-    headers = {'ent-Type': 'application/json', 'Authorization': f'{test_login}'}
+    headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     random_object = object_random(url=url, headers=headers)
     id_object= id_object_value(random_object=random_object)
     print("  Locacion id:", id_object )

@@ -40,7 +40,7 @@ def test_get_users_invalid_id(test_login):#test2 error por id invalido
 	assert response.status_code == 403
 
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="Error de status code distinto al 400-H702-Verificar que la API devuelve un error 400 al proporcionar parámetros adicionales no soportados")
 def test_get_users_id_not_supported_params(test_login):#test4 error por parametro no soportado FAILED
 	token = test_login
 	user_id = '100'
