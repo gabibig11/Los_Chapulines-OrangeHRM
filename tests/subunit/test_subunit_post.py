@@ -13,7 +13,7 @@ def test_create_subunit_with_valid_data(test_login):
         "name": "Orange Department D",
         "description": "",
         "parent_id": "1",
-        "head_of_department_employee": "2"
+        "head_of_department_employee": "3"
     }
     response = OrangeRequests().post(url=url, headers=headers, data=data)  # Use 'json' parameter instead of 'data'
     assert_create_subunit_success(response)
