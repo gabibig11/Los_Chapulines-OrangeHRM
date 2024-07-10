@@ -120,7 +120,6 @@ def test_patchusers_user_name_already_exists(test_login, setup_patchusers): # te
     response = OrangeRequests().patch(url=url, headers=headers, data=payload)
     assert response.status_code == 409
 
-@pytest.mark.xfail(reason="Error del endpoint que no reconoce la propiedad documentada 'changeSecondaryPassword'-HU703-Verificar que la API devuelve un error 422 cuando las contraseñas secundarias a actualizar no coinciden.")
 def test_patchusers_mismatched_second_password(test_login, setup_patchusers): # test7 error al proporcionar contraseñas secundarias que no coinciden
     token=test_login
     user_id=setup_patchusers
@@ -142,7 +141,7 @@ def test_patchusers_mismatched_second_password(test_login, setup_patchusers): # 
     response_data=response.json()
     print(response.json())
     assert response.status_code == 422
-    assert 'Passwords not match' in response_data['errors']['general'][0]
+    assert 'Secondary passwords not match' in response_data['errors']['general'][0]
 
 
 def test_patchusers_invalid_token(test_login, setup_patchusers): # test8 error al proporcionar token invalido
