@@ -80,7 +80,6 @@ def assert_nationality_post_schema(nationality_post_schema):
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'error: {err}')
 
-
 def assert_nationality_post_schema_response(payload):
     schema = load_schema_resource("nationality_post_response_schema.json")
     try:
@@ -90,6 +89,29 @@ def assert_nationality_post_schema_response(payload):
         return False
 
 
-def assert_nationality_name_exceeds_max_length(response):
-    assert response["title"] == "unsupported resource request"
+def assert_nationality_delete_schema(payload):
+    schema = load_schema_resource("nationality_delete_schema.json")
+    try:
+        jsonschema.validate(instance=payload, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        pytest.fail(f'Se presento un error: {err}')
 
+def assert_nacionality_auth_error(response, n):
+    if n == 1:
+        assert response["error"] == "invalid_token"
+        assert response["error_description"] == "The access token provided is invalid"
+    elif n == 2:
+        assert response["error"] == "expired_token"
+        assert response["error_description"] == "The access token provided has expired"
+    else:
+        assert response["error"] == 'invalid_request'
+        assert response["error_description"] == "Malformed auth header"
+
+def assert_nacionality_delete_schema(nacionality_delete):
+    schema = load_schema_resource("nacionality_delete_schema.json")
+    try:
+        jsonschema.validate(instance=nacionality_delete, schema=schema)
+        return True
+    except jsonschema.exceptions.ValidationError as err:
+        pytest.fail(f'Se presentó un error de validación del esquema: {err}')

@@ -19,6 +19,10 @@ def test_post_nationality_success(test_login):
         "name": "Catan"
     }
     assert assert_nationality_post_schema(payload) == True
+    payload = {
+        "name": "Catan"
+    }
+    assert assert_nationality_post_schema(payload) == True
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 201
     assert assert_nationality_post_schema_response(response.json()) == True
@@ -31,6 +35,7 @@ def test_post_nationality_invalid_token():
     headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer invalid_token'}
     payload = json.dumps({"name": "Catan"})
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
+    assert response.status_code == 401
     assert response.status_code == 401
     response_json = response.json()
     assert_invalid_token(response, response_json)

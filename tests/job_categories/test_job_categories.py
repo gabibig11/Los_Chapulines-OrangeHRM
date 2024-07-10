@@ -1,6 +1,6 @@
 from config import system_url
 from src.orangeHRM_api.endpoints import Endpoints
-from src.assertions.job_categories_assertions import assert_get_job_categories_schema, assert_get_job_categories_succesfuly
+from src.assertions.job_categories_assertions import assert_get_job_categories_schema, assert_get_job_categories_succesfuly, assert_get_job_asc, assert_get_job_desc
 import pytest
 from src.orangeHRM_api.api_requests import OrangeRequests
 
@@ -39,8 +39,7 @@ def test_job_categories_sorting_by_id_field(test_login):
     response_json = response.json()
     response_data = response_json["data"]
     assert_get_job_categories_succesfuly(response)
-    # Verificar que el id este en orden descendente para garantizar que se haya ordenado segun el campo id
-    assert all([int(response_data[i]["id"]) > int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
+    assert_get_job_desc(response)
 
 
 def test_job_categories_filter_by_field_and_order(test_login):
@@ -48,9 +47,7 @@ def test_job_categories_filter_by_field_and_order(test_login):
     url = f'{system_url}{Endpoints.job_categories.value}?limit=10&sortingFeild=id&sortingOrder=ASC'
     headers = {'Authorization': f'{test_login}'}
     response = OrangeRequests().get(url, headers=headers)
-    response_json = response.json()
-    response_data = response_json["data"]
-    assert all([int(response_data[i]["id"]) < int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
+    assert_get_job_asc(response)
 
 
 def test_job_categories_invalid_filter(test_login):
@@ -113,5 +110,5 @@ def test_job_categories_filter_by_all_param(test_login):
     
     assert_get_job_categories_succesfuly(response)
     assert len(response_data) == limit
-    assert all([int(response_data[i]["id"]) < int(response_data[i+1]["id"]) for i in range(len(response_data) - 1)])
+    assert_get_job_asc(response)
     assert response_data == response_without_offset_data[offset:offset+limit]

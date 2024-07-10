@@ -1,0 +1,55 @@
+{
+    "type": "object",
+    "required": [
+        "address",
+        "city",
+        "countryCode",
+        "eeo_applicable",
+        "fax",
+        "name",
+        "notes",
+        "phone",
+        "province",
+        "state",
+        "time_zone",
+        "zipCode"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "city": {
+            "type": "string"
+        },
+        "phone": {
+            "type": "string"
+        },
+        "time_zone": {
+            "type": "string"
+        },
+        "province": {
+            "type": "string"
+        },
+        "state": {
+            "type": "string"
+        },
+        "address": {
+            "type": "string"
+        },
+        "zipCode": {
+            "type": "string"
+        },
+        "fax": {
+            "type": "string"
+        },
+        "notes": {
+            "type": "string"
+        },
+        "countryCode": {
+            "type": "string"
+        },
+        "eeo_applicable": {
+            "type": "integer"
+        }
+    }
+}

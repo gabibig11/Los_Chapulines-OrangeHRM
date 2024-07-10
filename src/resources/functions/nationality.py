@@ -27,5 +27,3 @@ def set_up_delete(login):
     }
 
     return ids, example_data
-
-
