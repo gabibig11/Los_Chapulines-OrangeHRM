@@ -19,7 +19,7 @@ def test_get_all_users(test_login):#test1 todos los usuarios al no poner paramet
     assert_getusers_filter_schema(response_data)
     assert_count_users(response_data, users_counted)
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="Erro de status code success en lugar de badrequest-H704-Verificar que la API devuelve un error 400 al proporcionar un filtro o parámetro no soportado")
 def test_get_users_filter_not_params_supported(test_login):#test2 error al poner un parametro o filtro no soportado FAILED
     token = test_login
     url = f'{system_url}{Endpoints.getusers_filter.value}'
@@ -277,7 +277,7 @@ def test_get_users_filter_location(test_login):#test21 usuarios por filtro de ub
     assert response.status_code == 200
     assert_getusers_filter_schema(response_data)
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="Error al validar ubicacion invalida que devuelve un usuario-H704-Verificar que la API no devuelve datos de usuarios al proporcionar un ID de ubicación inexistente en el filtro 'filter[location]'")
 def test_get_users_filter_invalid_location(test_login):#test22 ningun usuario por filtro de ubicacion invalida o inexistente FAILED
     token = test_login
     users_counted = 0
@@ -304,7 +304,7 @@ def test_get_users_filter_include_deleted_false(test_login):#test23 usuario por 
     assert_getusers_filter_schema(response_data)
     assert_count_users(response_data, users_counted)
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="Error en el parametro que no incluye usuarios eliminados-H704-Verificar que la API devuelve datos de los usuarios existentes incluyendo usuarios eliminados al proporcionar el valor “true” en el filtro 'filter[includeDeleted]'")
 def test_get_users_filter_include_deleted_true(test_login):#test24 usuario por filtro de eliminados en true FAILED
     token = test_login
     users_counted = 0
@@ -348,7 +348,7 @@ def test_get_users_filter_order_field_user_name(test_login):#test26 usuarios ord
     assert_count_users(response_data, users_counted)
     assert_getusers_filter_order_all_values(response_data, 'user_name')
 
-@pytest.mark.xfail
+@pytest.mark.xfail(reason="Error 500 internal server error-H704-Verificar que la API devuelve datos de todos los usuarios ordenados por nombre a mostrar al proporcionar el parámetro 'orderField=display_name'")
 def test_get_users_filter_order_field_display_name(test_login):#test27 usuarios ordenados por nombre de mostrado FAILED
     token = test_login
     url = f'{system_url}{Endpoints.getusers_filter.value}'
