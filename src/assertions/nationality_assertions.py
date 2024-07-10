@@ -80,6 +80,7 @@ def assert_nationality_post_schema(nationality_post_schema):
     except jsonschema.exceptions.ValidationError as err:
         pytest.fail(f'error: {err}')
 
+
 def assert_nationality_post_schema_response(payload):
     schema = load_schema_resource("nationality_post_response_schema.json")
     try:
@@ -88,4 +89,7 @@ def assert_nationality_post_schema_response(payload):
     except jsonschema.exceptions.ValidationError as err:
         return False
 
+
+def assert_nationality_name_exceeds_max_length(response):
+    assert response["title"] == "unsupported resource request"
 
