@@ -2,9 +2,8 @@ import pytest
 from config import random_token, expired_token
 from conftest import *
 from src.assertions.nationality_assertions import (
-    assert_nacionality_delete_schema,
-    assert_nacionality_auth_error,
-    assert_nationality_delete_schema
+
+    assert_nationality_delete_schema, assert_nationality_auth_error
 )
 from src.resources.functions.nationality import set_up_delete
 import json
@@ -34,7 +33,7 @@ def test_nationality_delete_invalid_token():
     }
     response = OrangeRequests().delete(url, headers=headers)
     assert response.status_code == 401
-    assert_nacionality_auth_error(response.json(), 1)
+    assert_nationality_auth_error(response.json(), 1)
 
 
 def test_nationality_delete_expired_token():
@@ -45,7 +44,7 @@ def test_nationality_delete_expired_token():
     }
     response = OrangeRequests().delete(url, headers=headers)
     assert response.status_code == 401
-    assert_nacionality_auth_error(response.json(), 2)
+    assert_nationality_auth_error(response.json(), 2)
 
 
 def test_nationality_delete_without_token():
