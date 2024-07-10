@@ -5,8 +5,8 @@ from src.resources.functions.job_title import random_info
 from src.assertions.job_title_assertions import assert_job_title_post_schema, assert_job_title_auth_error, \
     assert_job_title_post_response_schema, assert_job_title_labels_above_max_length
 
-# Tomar en cuenta que el único label obligatorio es jobTitleName para crear un jobTitle
 
+# Tomar en cuenta que el único label obligatorio es jobTitleName para crear un jobTitle.
 
 # Verificar que se pueda añadir un cargo laboral con todos los parámetros correctos.
 @pytest.mark.smoke
