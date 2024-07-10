@@ -1,0 +1,226 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "messages",
+        "success"
+    ],
+    "properties": {
+        "data": {
+            "type": "object",
+            "required": [
+                "candidateCount",
+                "definedTime",
+                "guidelineId",
+                "hiringManager",
+                "includeArchivedCandidateOnDynamicRuleFilter",
+                "isResumeRequired",
+                "isTemplate",
+                "jobTitle",
+                "jobTitleCode",
+                "location",
+                "locationId",
+                "noOfPositions",
+                "permissions",
+                "publishedTime",
+                "requestConsent",
+                "status",
+                "statusId",
+                "subunit",
+                "subunitId",
+                "updatedTime",
+                "vacancyId",
+                "vacancyName",
+                "workflowId"
+            ],
+            "properties": {
+                "vacancyId": {
+                    "type": "string"
+                },
+                "vacancyName": {
+                    "type": "string"
+                },
+                "hiringManager": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "middleName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "empNumber": {
+                                "type": "string"
+                            },
+                            "termination_id": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "empNumber",
+                            "firstName",
+                            "lastName",
+                            "middleName",
+                            "termination_id"
+                        ]
+                    }
+                },
+                "noOfPositions": {
+                    "type": "string"
+                },
+                "definedTime": {
+                    "type": "string"
+                },
+                "updatedTime": {
+                    "type": "string"
+                },
+                "publishedTime": {
+                    "type": "null"
+                },
+                "workflowId": {
+                    "type": "string"
+                },
+                "guidelineId": {
+                    "type": "null"
+                },
+                "isTemplate": {
+                    "type": "null"
+                },
+                "requestConsent": {
+                    "type": "string"
+                },
+                "isResumeRequired": {
+                    "type": "string"
+                },
+                "includeArchivedCandidateOnDynamicRuleFilter": {
+                    "type": "boolean"
+                },
+                "locationId": {
+                    "type": "string"
+                },
+                "jobTitleCode": {
+                    "type": "string"
+                },
+                "statusId": {
+                    "type": "string"
+                },
+                "subunitId": {
+                    "type": "string"
+                },
+                "candidateCount": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "object",
+                    "required": [
+                        "city",
+                        "countryCode",
+                        "id",
+                        "name"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "countryCode": {
+                            "type": "string"
+                        },
+                        "city": {
+                            "type": "null"
+                        }
+                    }
+                },
+                "jobTitle": {
+                    "type": "object",
+                    "required": [
+                        "code",
+                        "isDeleted",
+                        "title"
+                    ],
+                    "properties": {
+                        "code": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "isDeleted": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "subunit": {
+                    "type": "object",
+                    "required": [
+                        "id",
+                        "subunit"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "subunit": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "status": {
+                    "type": "object",
+                    "required": [
+                        "id",
+                        "status"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "permissions": {
+                    "type": "object",
+                    "required": [
+                        "delete",
+                        "read",
+                        "update"
+                    ],
+                    "properties": {
+                        "read": {
+                            "type": "boolean"
+                        },
+                        "update": {
+                            "type": "boolean"
+                        },
+                        "delete": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
+        "success": {
+            "type": "boolean"
+        },
+        "messages": {
+            "type": "object",
+            "required": [
+                "success"
+            ],
+            "properties": {
+                "success": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
