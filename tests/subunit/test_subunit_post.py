@@ -2,8 +2,7 @@ import pytest
 import requests
 from config import system_url
 from src.orangeHRM_api.api_requests import OrangeRequests
-from src.assertions.subunit_assertions import  *
-from jsonschema import validate
+from src.assertions.subunit_assertions import *
 
 def test_create_subunit_with_valid_data(test_login):
     token = test_login
