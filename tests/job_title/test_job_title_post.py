@@ -1,8 +1,3 @@
-import json
-import random
-import string
-
-import pytest
 
 from config import random_token, expired_token
 from conftest import *
@@ -12,13 +7,15 @@ from src.assertions.job_title_assertions import assert_job_title_post_schema, as
 
 # Tomar en cuenta que el único label obligatorio es jobTitleName para crear un jobTitle
 
-#Verificar que se pueda añadir un cargo laboral con todos los parámetros correctos. (**SMOKE**)
+# Verificar que se pueda añadir un cargo laboral con todos los parámetros correctos. (**SMOKE**)
+
+
 @pytest.mark.smoke
-def test_job_title_post_sucess(test_login):
-    url= f'{system_url}{Endpoints.job_titles.value}'
+def test_job_title_post_success(test_login):
+    url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     data = {
-        "jobTitleName": "Respuesta de peticion automatizada sin []",
+        "jobTitleName": "Respuesta de peticion automatizada exitosa",
         "jobDescription": "Verificar la estructura de la respuesta y su status",
         "note": "Not null",
         "currentJobSpecification": "keepCurrent",
@@ -42,7 +39,7 @@ def test_job_title_post_sucess(test_login):
 def test_job_title_post_no_token():
     url = f'{system_url}{Endpoints.job_titles.value}'
     payload = {
-        "jobTitleName": "Respuesta de peticion automatizadaaa"
+        "jobTitleName": "Respuesta de peticion automatizada sin token"
     }
     response = OrangeRequests().post(url=url, data=payload)
     response_err = response.json()
@@ -57,7 +54,7 @@ def test_job_title_post_no_token():
 def test_job_title_post_no_authorization(wrong_token, case):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': wrong_token}
-    payload = {"jobTitleName": "Respuesta de peticion automatizadaaa"}
+    payload = {"jobTitleName": "Respuesta de peticion automatizada sin auth"}
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     response_data = response.json()
     assert response.status_code == 401
@@ -71,13 +68,14 @@ def test_job_title_post_empty_payload(test_login):
     response = OrangeRequests().post(url=url, headers=headers)
     assert response.status_code == 500
 
+
 # Verificar status cuando se quiere añadir un cargo laboral sin declarar 'jobTitleName'
 def test_job_title_post_no_jobTitleName_label(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
         "jobDescription": "Verificar la estructura de la respuesta y su status",
-        "note": "Not null"
+        "note": "Prueba sin label jobTitleName"
     }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 500
@@ -173,6 +171,7 @@ def test_job_tile_post_filesize_above_max_size(test_login):
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
     assert response.status_code == 400
 
+
 # Verificar respuesta declarando currentJobSpecification con los valores permitidos
 # (replaceCurrent, deleteCurrent, keepCurrent, newAttachment).
 @pytest.mark.parametrize("currentJobSpecification", ["replaceCurrent", "deleteCurrent", "keepCurrent", "newAttachment"])
@@ -201,12 +200,12 @@ def test_job_tile_post_allowed_currentJobSpecification_values(test_login, curren
 
 
 # Verificar respuesta con un valor no permitido en currentJobSpecification.
-@pytest.mark.xfail(reason= "Se crea un cargo con valor no predeterminado encurrentJobSpecification -H302- Verificar respuesta con un valor no permitido en currentJobSpecificatio")
+@pytest.mark.xfail(reason= "Se crea un cargo con valor no predeterminado encurrentJobSpecification-H302-Verificar respuesta con un valor no permitido en currentJobSpecificatio")
 def test_job_tile_post_invalid_currentJobSpecification_value(test_login):
     url = f'{system_url}{Endpoints.job_titles.value}'
     headers = {'Content-Type': 'application/json', 'Authorization': f'{test_login}'}
     payload = {
-        "jobTitleName": "Respuesta de peticion automatizada",
+        "jobTitleName": "Respuesta de peticion automatizada con currentJobSpecification invalido",
         "currentJobSpecification": f"{random_info(14)}"
     }
     response = OrangeRequests().post(url=url, headers=headers, data=payload)
