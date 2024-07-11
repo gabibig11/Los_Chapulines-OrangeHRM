@@ -1,0 +1,86 @@
+{
+    "type": "object",
+    "required": [
+        "data",
+        "meta"
+    ],
+    "properties": {
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "emp_number": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "user_name": {
+                        "type": "string"
+                    },
+                    "user_role_id": {
+                        "type": "string"
+                    },
+                    "deleted": {
+                        "type": "string"
+                    },
+                    "purged": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "date_entered": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "date_modified": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    },
+                    "modified_user_id": {
+                        "type": "null"
+                    },
+                    "created_by": {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    }
+                },
+                "required": [
+                    "created_by",
+                    "date_entered",
+                    "date_modified",
+                    "deleted",
+                    "emp_number",
+                    "id",
+                    "modified_user_id",
+                    "purged",
+                    "status",
+                    "user_name",
+                    "user_role_id"
+                ]
+            }
+        },
+        "meta": {
+            "type": "object",
+            "required": [
+                "total"
+            ],
+            "properties": {
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
